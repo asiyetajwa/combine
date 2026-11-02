@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combine: Evidence Log</title>
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+         margin: 0; color: #1a1a1a; background: #faf8f3; line-height: 1.55; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 28px; margin: 0 0 4px; }
+  h2 { font-size: 20px; margin: 32px 0 8px; }
+  .sub { color: #555; margin: 0 0 24px; }
+  .status { background: #fff3d6; border: 1px solid #e3c878; border-radius: 8px;
+            padding: 12px 16px; }
+  .entry { background: #fff; border: 1px solid #e5e0d5; border-radius: 8px;
+           padding: 16px 20px; margin: 16px 0; }
+  .date { color: #777; font-size: 13px; text-transform: uppercase;
+          letter-spacing: 0.06em; }
+  a { color: #0b5cad; }
+  ul { margin: 8px 0 8px 20px; padding: 0; }
+  li { margin: 6px 0; }
+  footer { color: #777; font-size: 14px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Combine: Evidence Log</h1>
+  <p class="sub">Solar-assisted compute for small LLM labs. What we have
+  checked, what we have not, and what comes next, in the open.</p>
+
+  <div class="status">
+    <strong>Honest status, 2 November 2026:</strong> Combine is a research
+    and prototyping project. Public evidence today is an interactive
+    concept, an assumption-based energy model, and the model results
+    below. Measured hardware results and confirmed deployments are
+    still to come. No labs are testing Combine today, and nothing on
+    this page should be read as claiming otherwise.
+  </div>
+
+  <h2>Sprint log</h2>
+
+  <div class="entry">
+    <p class="date">2 November 2026: Evidence sprint begins</p>
+    <p>We started a six-week evidence sprint, organised around Stage 1
+    of our <a href="eda-flow.html">proposed EDA flow</a>: set energy,
+    latency, memory and accuracy targets from a measured system
+    baseline, using system models and workload traces. From today,
+    every change in the evidence is published on this page the same
+    day.</p>
+    <p>Two commitments frame the sprint:</p>
+    <ul>
+      <li><strong>Simulation first, honestly labelled.</strong> Models
+      are published with their assumptions, so any reviewer can rerun
+      them and disagree with us precisely.</li>
+      <li><strong>Ten small-lab interviews.</strong> We are interviewing
+      ten independent builders and small LLM labs about compute access,
+      cloud cost, power reliability and data privacy. Interviews are
+      demand evidence and design input. Interviewees are not testers,
+      pilots or users, and we will not describe them that way.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <p class="date">2 November 2026: Energy model v1</p>
+    <p>Our first reproducible system model: an hourly, year-long
+    energy-budget simulation of one Combine node (PV array, battery
+    storage, inverter, one accelerator workstation), across 54
+    scenarios: three solar irradiation levels (4.0, 5.0 and
+    6.0 kWh/m2/day, following the bands in our NASA POWER based solar
+    atlas), three array sizes (2, 4 and 6 kWp), three storage sizes
+    (5, 10 and 15 kWh usable), and two scheduling strategies for
+    flexible fine-tuning work (a fixed evening start, versus
+    placement in the sunniest hours).</p>
+    <p>Workload assumption, stated plainly: one 4-hour
+    parameter-efficient fine-tuning session and 8 hours of local
+    inference per day, about 2,442 kWh of load per year. Workstation
+    power figures are assumptions based on a proposed 600 W class
+    accelerator, not measurements. Replacing them with measurements
+    is the next stage of this sprint.</p>
+    <p><strong>What the model says:</strong></p>
+    <ul>
+      <li><strong>Sizing:</strong> at 5.0 kWh/m2/day, a 2 kWp array with
+      5 kWh of usable storage already covers about 99.9 percent of the
+      annual load on solar energy in the model. At 4 kWp, more than
+      40 percent of generated energy has no load to serve. For this
+      workload, a bigger array is wasted capital; growth should go
+      into more workload, not more panels.</li>
+      <li><strong>Scheduling:</strong> in the tightest case modelled
+      (4.0 kWh/m2/day, 2 kWp, 10 kWh storage), sun-aware placement
+      cuts grid import from 186 to 85 kWh per year, at the cost of
+      15 deferred fine-tuning sessions the single daily slot cannot
+      catch up. Scheduling trades grid energy for delay, and we
+      report both sides of that trade.</li>
+      <li><strong>Storage:</strong> moving from 5 to 15 kWh of battery
+      changes grid import only slightly in most scenarios, because
+      the load is daytime-heavy. Storage size should follow measured
+      evening demand, not intuition.</li>
+    </ul>
+    <p>Next for the model: a cross-check against pvlib and the NREL
+    System Advisor Model, monthly seasonality from NASA POWER
+    climatology, and then measured workload traces in place of
+    assumed power figures.</p>
+  </div>
+
+  <h2>What is not claimed</h2>
+  <ul>
+    <li>No measured hardware results yet. All power figures above are
+    labelled assumptions.</li>
+    <li>No pilot, deployment, customer or lab partnership.</li>
+    <li>No EDA tools in current use, no completed RTL, no tape-out.
+    The <a href="eda-flow.html">EDA flow</a> is a proposed future
+    flow; the tools listed there are prospective, and the application
+    responses behind it are a draft, not a submission.</li>
+    <li>No relationship with any chip maker or AI company is claimed.
+    Names mentioned in our materials are prospective customers or
+    collaborators only.</li>
+  </ul>
+
+  <footer>
+    <p><a href="index.html">Back to Combine</a> &middot;
+    <a href="eda-flow.html">Proposed EDA flow</a></p>
+    <p>Combine, a Circle+ company. This log is updated as evidence
+    changes.</p>
+  </footer>
+</main>
+</body>
+</html>
