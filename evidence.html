@@ -97,10 +97,60 @@
       the load is daytime-heavy. Storage size should follow measured
       evening demand, not intuition.</li>
     </ul>
+    <p><em>Update, same day: the cross-check below revises the sizing
+    headline to about 97 percent and withdraws the storage finding.</em></p>
     <p>Next for the model: a cross-check against pvlib and the NREL
     System Advisor Model, monthly seasonality from NASA POWER
     climatology, and then measured workload traces in place of
     assumed power figures.</p>
+  </div>
+
+  <div class="entry">
+    <p class="date">2 November 2026: Model cross-check (Gate G1)</p>
+    <p>We checked energy model v1 against two validated open solar
+    models, <a href="https://pvlib-python.readthedocs.io/">pvlib</a> and
+    the NREL <a href="https://sam.nrel.gov/">System Advisor Model</a>,
+    fed real hourly weather for three reference locations, one per
+    model scenario: Douala, Accra and Addis Ababa. They were chosen only
+    because their NASA POWER irradiation matches the scenarios. They are
+    reference points, not proposed sites. The code, the weather data
+    and every result are <a href="https://github.com/asiyetajwa/combine/tree/main/model">published
+    with this entry</a>, so anyone can rerun it.</p>
+    <p><strong>What we found:</strong></p>
+    <ul>
+      <li><strong>The two reference models agree</strong> within
+      2.5 percent, so the check itself is sound.</li>
+      <li><strong>Our v1 formula overstates solar yield</strong> by 3 to
+      9 percent on the same weather. It has no term for panel heat, and
+      at these tropical sites cells average 34 to 40 C in daylight,
+      costing 5 to 8 percent of output.</li>
+      <li><strong>The weather source matters more than the
+      formula.</strong> For the same locations, two satellite datasets
+      (NASA POWER and PVGIS SARAH2) differ by 7 to 20 percent in annual
+      irradiation. Sizing must be tested against both, not one.</li>
+    </ul>
+    <p><strong>What this changes in v1's findings</strong>, with real
+    seasons and the same annual energy:</p>
+    <ul>
+      <li><strong>Sizing:</strong> the direction holds, the headline
+      does not. At 5.0 kWh/m2/day, a 2 kWp array with 5 kWh of storage
+      covers about 97 percent of the load, not 99.9 percent. The gap is
+      in the rainy months. A larger array still mostly produces surplus.</li>
+      <li><strong>Scheduling:</strong> holds, with a sharper trade. In
+      the tightest case, sun-aware placement cuts grid import from 286 to
+      107 kWh a year, but deferred sessions rise from 15 to 45, because
+      cloudy seasons last weeks.</li>
+      <li><strong>Storage:</strong> our earlier statement that battery
+      size is a weak lever does not hold in general. Away from the
+      lowest irradiation case, going from 5 to 15 kWh removes most of
+      the remaining seasonal grid import (75 to 29 kWh a year at the
+      Accra reference). We withdraw that finding.</li>
+    </ul>
+    <p>Still open: every workstation power figure is an assumption. Next
+    are model v2 (hourly solar from pvlib, monthly seasons, both weather
+    sources) and then measured workload traces.
+    <a href="https://github.com/asiyetajwa/combine/blob/main/model/G1-crosscheck.md">Full
+    method and results</a>.</p>
   </div>
 
   <h2>What is not claimed</h2>
