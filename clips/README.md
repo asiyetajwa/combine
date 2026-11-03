@@ -14,13 +14,6 @@ Four clips generated on Vertex AI (Veo 3.1) on 2026-11-03 from the Combine Veo p
 1. Do not include the text "Concept film" anywhere in the edit.
 2. Wherever a logo or branding appears, it must be the attached logo image only (logo-only.png in this folder), with no accompanying "Combine" text.
 
-## What to fix in the edit
+## Regeneration note
 
-The rendered plates in the footage do not all follow rule 2 yet:
-
-- clip-0: the cabinet plate shows the mark next to the word "combine", large in the closing close-up.
-- clip-1: small plates show the mark next to the word "combine"; the large cabinet plate text is garbled.
-- clip-2: the pole box plate shows the mark next to a garbled version of the word.
-- clip-3: the server rack plate already shows the mark only, nothing to fix.
-
-Bring every branding instance in line with rule 2. If an end card is used, it is the logo image alone.
+The first renders of clips 0, 1 and 2 carried the word "combine" next to the symbol on their equipment plates. On Brian's order those three shots were regenerated on 2026-11-03 with cleaned reference images and symbol-only plates, and the old versions were deleted. Clip 3 was not regenerated: its server rack plate already showed the symbol only. If an end card is used, it is the logo image alone.
