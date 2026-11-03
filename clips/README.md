@@ -1,5 +1,3 @@
-# Combine Clips
-
 Four clips re-rendered on Vertex AI (Veo 3.1) on 2026-11-03 from prompt
 pack v3, after Brian rejected the v2 winners. Two takes per shot; the best
 passing take per shot was selected after a frame check. Each clip is
@@ -10,7 +8,7 @@ passing take per shot was selected after a frame check. Each clip is
 - clip-0.mp4: hero cabinet, golden hour solar node in open grassland (take 1)
 - clip-1.mp4: lab workstation, developer in a small independent AI studio (take 2)
 - clip-2.mp4: yard unit, camera pole node overlooking a logistics yard (take 1)
-- clip-3.mp4: data center, aerial solar field then a server hall with one engineer (take 1)
+- clip-3.mp4: data center, aerial solar field then a server hall with one engineer (v5 take 1, replaced 2026-11-04; see Provenance v5 below)
 
 ## Provenance (v3)
 
@@ -48,3 +46,24 @@ v2 winners carried a ghost mark fault. Frame check for v3:
   white/cream enclosure, or a second/ghost mark on the equipment was
   rejected.
 - Brian's standing rule for the edit: it carries no such label text anywhere.
+
+
+## Provenance (v5, clip 3 only, 2026-11-04)
+
+Brian rejected the v3 clip 3: the logo was off. The v4 re-render (four takes)
+was judged against a wrong geometry spec and produced no passing take.
+Brian then supplied the actual logo file, and the true geometry was measured
+from it: the diamond is vertically centred on the C, its left tip tucked just
+inside the C's opening without touching the ring, about one third the height
+of the C, muted leaf green. Clip 3 was re-rendered with that geometry in
+words plus two reference images: the logo file itself and a panel reference
+built from it (true mark etched tone on tone on dark green metal).
+
+Frame check for v5 (full-resolution frames, seconds 5 to 7.5):
+- Take 1 PASSES: exactly one mark on the rack end panel; the C is etched
+  tone on tone in the panel's own dark green, matte and flush; the diamond
+  is vertically centred on the C with its left tip just inside its opening,
+  not touching the ring, about one third the C's height, muted leaf green;
+  the engineer is a woman with a ponytail in a hi-vis vest.
+- Take 4 rejected (black/dark-grey C). Take 3 failed to submit. No takes 5/6
+  were needed. The other three clips are unchanged from v3.
