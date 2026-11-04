@@ -1,1 +1,1 @@
-window.COMBINE_LETTER_AUDIO = null;
+window.COMBINE_LETTER_AUDIO = {"src":"assets/letter-audio.mp3","duration":152.2,"marks":[{"id":"s1","start":0},{"id":"s2","start":17.94},{"id":"s3","start":37.73},{"id":"s4","start":42.69},{"id":"s5","start":61.74},{"id":"s6","start":69.52},{"id":"s7","start":75.91},{"id":"s8","start":99.67},{"id":"s9","start":108.33},{"id":"s10","start":119.12},{"id":"s11","start":123.2},{"id":"s12","start":138.18},{"id":"s13","start":148.8},{"id":"sign","start":151.5}]};
