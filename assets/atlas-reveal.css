@@ -1,12 +1,21 @@
 /* Solar Atlas reveal: a sunlit wall, a horizon seam, desert sand below; the globe waits behind the seam.
    Desktop pulls the horizon down; phones swipe the sun up. */
 .rv { border-top: 0; background: #071a20; }
-.rv-stage { position: relative; overflow: hidden; height: min(86vh, 860px); min-height: 560px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.rv-stage { --seam: 60%; --lg: 46px; --hg: 104px; position: relative; overflow: hidden; height: min(86vh, 860px); min-height: 560px; touch-action: none; user-select: none; -webkit-user-select: none;
+  /* the scene painted in plain CSS, so it is there on the very first frame, before any script runs */
+  background:
+    radial-gradient(22% 30% at 50% 32%, rgba(255, 255, 255, .85), rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, #e9e1cf 0%, #f7f1e3 calc(var(--seam) * .55), #d4c8ae calc(var(--seam) - 1px), #ffffff calc(var(--seam) - 1px), #ffffff var(--seam), #eef0ec var(--seam), #f3dcb6 calc(var(--seam) + 3%), #ebc08a calc(var(--seam) + 18%), #d6a064 100%); }
+#rv-globe { background: #071a20; opacity: 0; }
+.rv-stage.globe-ready #rv-globe { opacity: 1; }
 .rv-stage > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 .rv-cover { pointer-events: none; }
 .rv-globe { cursor: grab; }
 .rv-globe:active { cursor: grabbing; }
 .rv-label, .rv-hint { position: absolute; left: 0; right: 0; top: 0; pointer-events: none; display: grid; justify-items: center; }
+.rv-label { top: calc(var(--seam) - var(--lg)); }
+.rv-hint { top: calc(var(--seam) + var(--hg)); }
+.rv-stage.live .rv-label, .rv-stage.live .rv-hint { top: 0; }
 .rv-label span { font: 600 clamp(14px, 1.5vw, 19px)/1 var(--display); letter-spacing: .28em; text-transform: uppercase; color: rgba(70, 58, 40, .78); text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0 -1px 1px rgba(0, 0, 0, .18); }
 .rv-hint span { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 244, 226, .95); background: rgba(110, 60, 20, .42); padding: 7px 10px; border-radius: 999px; }
 .rv-grab { position: absolute; left: 0; right: 0; height: 72px; cursor: grab; z-index: 2; }
@@ -14,7 +23,8 @@
 .rv-grab:focus-visible { outline: 2px solid var(--leaf); outline-offset: -6px; }
 
 /* desktop panel */
-.rv-panel { position: absolute; top: 0; bottom: 0; right: max(16px, calc((100vw - 1240px) / 2 + 16px)); width: min(400px, 36vw); display: grid; align-content: center; gap: 14px; color: #f4ecdc; opacity: 0; transform: translateX(24px); transition: opacity .6s ease .25s, transform .6s ease .25s; pointer-events: none; z-index: 3; }
+.rv-panel { position: absolute; top: 0; bottom: 0; right: max(16px, calc((100vw - 1240px) / 2 + 16px)); width: min(400px, 36vw); display: grid; align-content: center; gap: 14px; color: #f4ecdc; opacity: 0; transform: translateX(24px); transition: none; pointer-events: none; z-index: 3; }
+.rv-stage.open .rv-panel { transition: opacity .6s ease .25s, transform .6s ease .25s; }
 .rv-stage.open .rv-panel { opacity: 1; transform: none; pointer-events: auto; }
 .rv-panel .eyebrow { color: #a9bab5; }
 .rv-panel h1 { font: 300 clamp(26px, 2.6vw, 36px)/1.08 var(--display); letter-spacing: -.03em; margin: 0; color: #f4ecdc; }
@@ -33,7 +43,8 @@
 .rv-months { width: 100%; height: 64px; display: block; }
 
 /* phone */
-.rv-cards { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 0 22px; display: none; transform: translateY(105%); transition: transform .55s cubic-bezier(.2, .8, .2, 1) .15s; z-index: 4; }
+.rv-cards { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 0 22px; display: none; transform: translateY(105%); transition: none; z-index: 4; }
+.rv-stage.open .rv-cards { transition: transform .55s cubic-bezier(.2, .8, .2, 1) .15s; }
 .rv-cards .track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 22px; scrollbar-width: none; }
 .rv-cards .track::-webkit-scrollbar { display: none; }
 .rv-cards .c { flex: 0 0 80%; scroll-snap-align: center; background: rgba(12, 38, 48, .88); backdrop-filter: blur(8px); border: 1px solid rgba(244, 236, 220, .16); color: #f4ecdc; border-radius: 16px; padding: 14px 16px; display: grid; gap: 4px; }
@@ -41,10 +52,11 @@
 .rv-cards .c .k { font: 500 10px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #a9bab5; }
 .rv-cards .c .n { font-size: 15px; font-weight: 500; }
 .rv-cards .c p { margin: 4px 0 0; font-size: 12px; color: #c9d3cf; }
-.rv-phonehead { position: absolute; left: 22px; right: 22px; top: 18px; z-index: 3; color: #f4ecdc; display: none; opacity: 0; transition: opacity .5s ease .3s; }
+.rv-phonehead { position: absolute; left: 22px; right: 22px; top: 18px; z-index: 3; color: #f4ecdc; display: none; opacity: 0; transition: none; }
+.rv-stage.open .rv-phonehead { transition: opacity .5s ease .3s; }
 .rv-phonehead h1 { font: 300 24px/1.1 var(--display); letter-spacing: -.03em; margin: 8px 0 0; color: #f4ecdc; max-width: 14ch; }
 @media (max-width: 760px) {
-  .rv-stage { height: calc(100svh - 64px); min-height: 600px; }
+  .rv-stage { --seam: 70%; --lg: 40px; --hg: 54px; height: calc(100svh - 64px); min-height: 600px; }
   .rv-grab { top: 0 !important; bottom: 0; height: auto; }
   .rv-panel { display: none; }
   .rv-cards, .rv-phonehead { display: block; }
@@ -59,8 +71,13 @@
 .rv-x { width: 34px; height: 34px; display: grid; place-items: center; padding: 0; background: rgba(244, 236, 220, .04); border: 1px solid rgba(244, 236, 220, .12); border-radius: 6px; color: #dfe5df; cursor: pointer; }
 .rv-x svg { width: 14px; height: 14px; }
 .rv-x:hover, .rv-x:focus-visible { border-color: var(--ochre, #e3a24c); color: #f4ecdc; }
-.rv-x-phone { display: none; position: absolute; top: 16px; right: 22px; z-index: 5; opacity: 0; pointer-events: none; transition: opacity .3s; background: rgba(12, 38, 48, .72); }
+.rv-x-phone { display: none; position: absolute; top: 16px; right: 22px; z-index: 5; opacity: 0; pointer-events: none; transition: opacity .12s; background: rgba(12, 38, 48, .72); }
 @media (max-width: 760px) { .rv-x-phone { display: grid; } .rv-stage.open .rv-x-phone { opacity: 1; pointer-events: auto; } }
 
 /* the GPU desert sits under the cover and is clipped to the sand outline */
 .rv-desert { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* both hint wordings are in the page so the right one shows on the first frame */
+.rv-hint span.rv-hint-desk, .rv-hint span.rv-hint-phone { all: unset; }
+.rv-hint-phone { display: none !important; }
+@media (max-width: 760px) { .rv-hint-desk { display: none !important; } .rv-hint-phone { display: inline !important; } }

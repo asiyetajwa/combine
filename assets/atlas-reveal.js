@@ -55,11 +55,13 @@
       .attr('opacity', function (s) { return d3.geoDistance([s.lon, s.lat], [-c[0], -c[1]]) < Math.PI / 2 ? 1 : 0; });
   }
   function spin() {
+    // the globe is hidden behind the horizon until it opens: keep turning, but only draw when it can be seen
+    var visible = st.opening > 0.001 || st.pull > 1;
     if (!g.dragging) {
       g.rot[0] += (g.target[0] - g.rot[0]) * 0.07; g.rot[1] += (g.target[1] - g.rot[1]) * 0.07;
       if (!stage.classList.contains('open') && !reduce) { g.target[0] += 0.06; }
     }
-    drawGlobe(); requestAnimationFrame(spin);
+    if (visible && g.proj) drawGlobe(); requestAnimationFrame(spin);
   }
   gsvg.call(d3.drag()
     .filter(function () { return stage.classList.contains('open'); })
@@ -147,13 +149,14 @@
   var desert = (window.CombineDesert && !/desert=svg/.test(location.search)) ? window.CombineDesert(stage, document.getElementById('rv-cover')) : null;
   if (desert) { sand.attr('fill', 'transparent').attr('filter', null); mirage.style('display', 'none'); mirageGlint.style('display', 'none'); }
   var st = { pull: 0, vel: 0, x0: 0.5, dragging: false, open: false, opening: 0, openVel: 0 };
+  function dirNow() { return st.dragDir || cfg().dir; }
   function cfg() { return phone() ? { seam: 0.7, dir: -1, threshold: 0.14, labelGap: 40, hintGap: 54 } : { seam: 0.6, dir: 1, threshold: 0.2, labelGap: 46, hintGap: 104 }; }
   function bump(x, amp) { var w = W * (0.09 + Math.min(0.12, amp / H * 0.5)); var d = (x - st.x0 * W) / w; return amp * Math.exp(-d * d); }
   function edge(y0, sign, lift, amp) { var pts = []; for (var i = 0; i <= 90; i++) { var x = i / 90 * W; pts.push(x.toFixed(1) + ',' + (y0 + sign * (lift + bump(x, amp))).toFixed(1)); } return pts; }
   function render() {
     var c = cfg(), y0 = H * c.seam, prog = st.opening, amp = st.pull * (1 - prog);
     var liftUp = prog * H * (c.seam + 0.08), liftDown = prog * H * (1 - c.seam + 0.08);
-    var gapTop = c.dir > 0 ? 0.18 : 0.82, gapBot = 1 - gapTop;
+    var dd = dirNow(), gapTop = dd > 0 ? 0.18 : 0.82, gapBot = 1 - gapTop;
     var top = edge(y0, -1, liftUp, amp * gapTop), bot = edge(y0, 1, liftDown, amp * gapBot);
     wall.attr('d', 'M0,0L' + W + ',0L' + top.slice().reverse().join('L') + 'Z');
     var sandD = 'M' + bot.join('L') + 'L' + W + ',' + H + 'L0,' + H + 'Z';
@@ -164,16 +167,16 @@
     sandShade.attr('d', 'M' + bot.join('L') + 'L' + W + ',' + (y0 + liftDown + H * 0.2) + 'L0,' + (y0 + liftDown + H * 0.2) + 'Z');
     rim.attr('d', 'M' + top.join('L'));
     spot.attr('cx', W * 0.5).attr('cy', y0 * 0.55 - liftUp).attr('rx', W * 0.22).attr('ry', y0 * 0.5);
-    var cx = st.x0 * W, cy = y0 - liftUp + (c.dir > 0 ? amp * 0.15 : -amp * 0.55), gl = Math.min(1, st.pull / (H * 0.12)) * (1 - prog * 0.6);
+    var cx = st.x0 * W, cy = y0 - liftUp + (dd > 0 ? amp * 0.15 : -amp * 0.55), gl = Math.min(1, st.pull / (H * 0.12)) * (1 - prog * 0.6);
     glow.attr('cx', cx).attr('cy', cy).attr('rx', W * 0.16 + st.pull * 0.6).attr('ry', H * 0.08 + st.pull * 0.5).attr('opacity', 0.25 + gl * 0.75);
     var sz = Math.max(14, Math.min(26, W / 52));
-    var sy = c.dir > 0 ? y0 + liftDown + amp * gapBot + sz * 1.8 : y0 - liftUp - amp * gapTop - sz * 1.2 - st.pull * 0.35;
+    var sy = dd > 0 ? y0 + liftDown + amp * gapBot + sz * 1.8 : y0 - liftUp - amp * gapTop - sz * 1.2 - st.pull * 0.35;
     spark.attr('transform', 'translate(' + (cx - sz / 2) + ',' + sy + ') scale(' + (sz / 64) + ')').attr('opacity', 1 - prog);
     diamond.attr('fill', d3.interpolateRgb('#7da85a', '#d6ff9a')(gl)).style('filter', 'drop-shadow(0 0 ' + (2 + gl * 10) + 'px rgba(190,255,120,' + (0.4 + gl * 0.6) + '))');
     $('rv-label').style.transform = 'translateY(' + (y0 - liftUp - c.labelGap) + 'px)'; $('rv-label').style.opacity = String(1 - prog);
     $('rv-hint').style.transform = 'translateY(' + (y0 + liftDown + c.hintGap) + 'px)'; $('rv-hint').style.opacity = String(Math.max(0, 1 - st.pull / (H * 0.08)) * (1 - prog));
     if (desert) desert.draw({ clip: sandD, horizon: y0 + liftDown, glowX: cx, glowY: y0 + liftDown, glow: gl, opacity: 1, still: reduce });
-    if (!phone()) $('rv-grab').style.top = (y0 - 36 + (c.dir > 0 ? amp * 0.3 : 0)) + 'px';
+    if (!phone()) $('rv-grab').style.top = (y0 - 36 + (dd > 0 ? amp * 0.3 : -amp * 0.3)) + 'px';
     $('rv-grab').style.display = prog > 0.5 ? 'none' : '';
   }
   function size() {
@@ -181,9 +184,9 @@
     svg.attr('viewBox', '0 0 ' + W + ' ' + H);
     turb.attr('baseFrequency', phone() ? '0.012 0.09' : '0.007 0.075');
     lit.attr('surfaceScale', phone() ? 2.2 : 2.4);
-    $('rv-hint-text').textContent = phone() ? 'Swipe Up To Raise The Sun' : 'Grab The Horizon And Pull';
     if (desert) desert.resize(W, H);
-    buildGlobe(); render();
+    if (g.proj) buildGlobe();
+    render();
   }
   function tick() {
     if (!st.dragging) { st.vel = (st.vel - st.pull * 0.14) * 0.72; st.pull += st.vel; if (Math.abs(st.pull) < 0.05 && Math.abs(st.vel) < 0.01) st.pull = 0; }
@@ -191,7 +194,8 @@
     if (reduce) st.opening = to; else { st.openVel = (st.openVel + (to - st.opening) * 0.06) * 0.8; st.opening += st.openVel; if (Math.abs(to - st.opening) < 0.001 && Math.abs(st.openVel) < 0.001) st.opening = to; }
     st.opening = Math.max(0, Math.min(1, st.opening));
     var wasOpen = stage.classList.contains('open');
-    stage.classList.toggle('open', st.opening > 0.85);
+    stage.classList.toggle('open', st.open && st.opening > 0.85);
+    if (!st.dragging && st.pull < 0.5 && !st.open) st.dragDir = 0;
     if (!wasOpen && stage.classList.contains('open')) stage.classList.add('lit');
     render(); requestAnimationFrame(tick);
   }
@@ -200,21 +204,25 @@
   grab.addEventListener('pointerdown', function (e) {
     if (st.open) return;
     grab.setPointerCapture(e.pointerId);
-    var r = stage.getBoundingClientRect(); st.dragging = true; st.x0 = (e.clientX - r.left) / W; startY = e.clientY; startPull = st.pull;
+    var r = stage.getBoundingClientRect(); st.dragging = true; st.x0 = (e.clientX - r.left) / W; startY = e.clientY; startPull = st.pull; if (st.pull < 1) st.dragDir = 0;
   });
   grab.addEventListener('pointermove', function (e) {
     var r = stage.getBoundingClientRect();
     if (!st.dragging) { if (!st.open && !phone()) st.x0 += ((e.clientX - r.left) / W - st.x0) * 0.25; return; }
     st.x0 += ((e.clientX - r.left) / W - st.x0) * 0.35;
-    var raw = Math.max(0, startPull + (e.clientY - startY) * cfg().dir), max = H * 0.55;
+    var dy = e.clientY - startY; if (!st.dragDir && Math.abs(dy) > 4) st.dragDir = dy > 0 ? 1 : -1;
+    var raw = Math.max(0, startPull + dy * (st.dragDir || cfg().dir)), max = H * 0.55;
     st.pull = max * (1 - Math.exp(-raw / max));
   });
   function release() { if (!st.dragging) return; st.dragging = false; st.vel = 0; if (st.pull > H * cfg().threshold) open(); }
   grab.addEventListener('pointerup', release); grab.addEventListener('pointercancel', release);
   grab.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-  document.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { st.open = false; stage.classList.remove('lit'); }); });
+  document.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { st.open = false; stage.classList.remove('open'); stage.classList.remove('lit'); }); });
 
   var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(size, 120); });
-  size(); select(sites[0]); g.rot = [-sites[0].lon + 60, -8]; g.target = g.rot.slice();
+  stage.classList.add('live');
+  size(); g.rot = [-sites[0].lon + 60, -8]; g.target = g.rot.slice();
+  // the cover is on screen now; build the globe and the region panel just after
+  setTimeout(function () { buildGlobe(); select(g.active || sites[0]); stage.classList.add('globe-ready'); }, 0);
   requestAnimationFrame(tick); requestAnimationFrame(spin);
 })();

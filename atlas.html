@@ -18,6 +18,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 <link rel="stylesheet" href="assets/atlas-reveal.css">
+<link rel="preload" href="assets/vendor/d3-7.9.0.min.js" as="script">
+<link rel="preload" href="assets/atlas-data.js" as="script">
 </head>
 <body>
 <nav class="top" aria-label="Main">
@@ -35,7 +37,7 @@
     <svg id="rv-globe" role="img" aria-label="Globe of nine sunny regions screened for solar-powered compute; drag to turn it"></svg>
     <svg class="rv-cover" id="rv-cover" aria-hidden="true"></svg>
     <div class="rv-label" id="rv-label"><span>Solar Atlas</span></div>
-    <div class="rv-hint" id="rv-hint"><span id="rv-hint-text">Grab The Horizon And Pull</span></div>
+    <div class="rv-hint" id="rv-hint"><span id="rv-hint-text"><span class="rv-hint-desk">Pull The Horizon Up Or Down</span><span class="rv-hint-phone">Swipe Up Or Down To Open</span></span></div>
     <div class="rv-grab" id="rv-grab" role="button" tabindex="0" aria-label="Open the horizon to reveal the Solar Atlas. Press Enter to open."></div>
     <div class="rv-phonehead"><span class="eyebrow">Solar Atlas</span><h1>Where could sunlight support more compute?</h1></div>
     <aside class="rv-panel" aria-label="Region details">
@@ -92,10 +94,10 @@
     <p class="legal">© 2026 Combine, a Circle+ Company.</p>
   </div>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
-<script src="assets/atlas-data.js"></script>
-<script src="assets/desert-gl.js"></script>
-<script src="assets/atlas-reveal.js"></script>
+<script defer src="assets/vendor/d3-7.9.0.min.js"></script>
+<script defer src="assets/vendor/topojson-client-3.1.0.min.js"></script>
+<script defer src="assets/atlas-data.js"></script>
+<script defer src="assets/desert-gl.js"></script>
+<script defer src="assets/atlas-reveal.js"></script>
 </body>
 </html>
