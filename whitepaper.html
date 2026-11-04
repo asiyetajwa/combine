@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combine White Paper</title>
+<meta name="theme-color" content="#163b31">
+<meta property="og:title" content="Combine White Paper: Solar-assisted compute for small AI labs">
+<meta property="og:description" content="Findings from a 600-person survey, 60 interviews and a validated energy model.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://asiyetajwa.github.io/combine/whitepaper.html">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M49.7%2014.3a25%2025%200%201%200%200%2035.4l-8.5-8.5a13%2013%200%201%201%200-18.4l8.5-8.5Z%22%20fill%3D%22%23183c31%22%2F%3E%3Cpath%20d%3D%22m52%2023%209%209-9%209-9-9%209-9Z%22%20fill%3D%22%23759651%22%2F%3E%3C%2Fsvg%3E">
+
+<meta name="description" content="Solar-assisted compute for small AI labs: findings from a 600-person survey, 60 interviews and a validated energy model.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>:root {
+  color-scheme: light dark;
+  --paper: #f7f8f2; --surface: #ffffff; --ink: #163b31; --body: #24332d; --dim: #5b6b63; --rule: #d9ddcf;
+  --leaf: #759651; --forest: #163b31; --teal: #0c2630; --ochre: #c27d22; --terra: #b5532a;
+  --bar: #c9cfbf; --bar-on: #163b31; --cover-ink: #f4ecdc;
+  --display: "Geist", "Helvetica Neue", Arial, sans-serif; --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0c2630; --surface: #11323d; --ink: #f4ecdc; --body: #dfe5df; --dim: #a9bab5; --rule: #26505b;
+    --bar: #3a5f68; --bar-on: #e3a24c; --leaf: #93b866;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0c2630; --surface: #11323d; --ink: #f4ecdc; --body: #dfe5df; --dim: #a9bab5; --rule: #26505b;
+  --bar: #3a5f68; --bar-on: #e3a24c; --leaf: #93b866;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--body); font: 400 17px/1.65 var(--display); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left)); }
+a { color: var(--ink); text-underline-offset: 3px; }
+h1, h2 { color: var(--ink); font-weight: 300; letter-spacing: -.03em; text-wrap: balance; margin: 0; }
+p { margin: 0 0 1em; }
+b { color: var(--ink); font-weight: 600; }
+.smallcap { font: 500 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--dim); margin: 0 0 14px; }
+
+/* cover */
+.cover { background: var(--forest); color: var(--cover-ink); padding: clamp(56px, 12vw, 140px) 0 clamp(48px, 9vw, 96px); }
+.cover .wrap { display: grid; gap: 22px; }
+.brandrow { display: flex; align-items: center; gap: 14px; }
+.mark { display: inline-flex; width: 40px; height: 40px; color: currentColor; }
+.mark svg { width: 100%; height: 100%; }
+.kicker { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .14em; color: #c6d6c0; }
+.cover h1 { color: var(--cover-ink); font-size: clamp(40px, 7vw, 76px); line-height: 1; max-width: 13ch; }
+.dek { font-size: clamp(18px, 2.4vw, 22px); line-height: 1.45; color: #dfe7dc; max-width: 42ch; margin: 0; }
+.byline { font: 400 13px/1 var(--mono); color: #c6d6c0; margin: 8px 0 0; }
+
+/* at a glance */
+.glance { background: var(--surface); border: 1px solid var(--rule); border-top: 4px solid var(--ochre); margin: -36px 0 0; padding: clamp(22px, 4vw, 36px); position: relative; }
+.glance ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
+.glance li { padding: 0 16px; border-left: 1px solid var(--rule); display: grid; gap: 6px; align-content: start; min-width: 0; }
+.glance li:first-child { border-left: 0; padding-left: 0; }
+.glance li b { font: 300 clamp(34px, 4.6vw, 46px)/1 var(--display); letter-spacing: -.04em; color: var(--ink); }
+.gl-k { font-weight: 600; font-size: 14px; line-height: 1.3; color: var(--ink); }
+.gl-t { font-size: 13px; line-height: 1.45; color: var(--dim); }
+.glance-foot { margin: 22px 0 0; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 15px; color: var(--body); }
+@media (max-width: 760px) { .glance ol { grid-template-columns: 1fr 1fr; gap: 20px 0; } .glance li:nth-child(odd) { border-left: 0; padding-left: 0; } .glance li:last-child { grid-column: 1 / -1; border-left: 0; padding-left: 0; } }
+
+/* sections */
+section { padding: clamp(44px, 7vw, 72px) 0 0; }
+.secno { font: 500 13px/1 var(--mono); color: var(--ochre); letter-spacing: .1em; margin: 0 0 10px; }
+section h2 { font-size: clamp(30px, 4.4vw, 44px); line-height: 1.05; margin-bottom: 22px; }
+.lede { font-size: clamp(19px, 2.3vw, 22px); line-height: 1.45; color: var(--ink); font-weight: 400; }
+
+/* exhibits */
+.exhibit { margin: 32px 0; padding: 22px 0 14px; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); }
+.exhibit figcaption { display: grid; gap: 4px; margin-bottom: 16px; }
+.exno { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--ochre); }
+.extitle { font-size: 19px; line-height: 1.35; font-weight: 500; color: var(--ink); max-width: 40ch; }
+.exnote { font-size: 14px; font-weight: 600; color: var(--body); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--dim); margin: 0 0 12px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 7px; vertical-align: -2px; }
+.legend i.on { background: var(--bar-on); } .legend i.off { background: var(--bar); }
+.notes { font-size: 12px; line-height: 1.5; color: var(--dim); margin: 12px 0 0; }
+.chart { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .lab { font: 400 13px var(--display); fill: var(--body); }
+.chart .lab.sm { font-size: 12px; fill: var(--dim); }
+.chart .val { font: 500 13px var(--mono); fill: var(--ink); }
+.chart .bar { fill: var(--bar); }
+.chart .bar.on { fill: var(--bar-on); }
+.chart .seg.s1 { fill: var(--forest); } .chart .seg.s2 { fill: #2f5c4c; } .chart .seg.s3 { fill: #5a8070; } .chart .seg.s4 { fill: #8aa79a; } .chart .seg.s5 { fill: var(--bar); }
+.chart .segv { font: 500 13px var(--mono); fill: #ffffff; }
+.chart .segv.dk { fill: #163b31; }
+.source { font: 400 12px/1.5 var(--mono); color: var(--dim); margin: 14px 0 0; }
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+th { text-align: left; font: 500 11px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--dim); padding: 8px 10px; border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+td { padding: 10px; border-bottom: 1px solid var(--rule); color: var(--body); font-variant-numeric: tabular-nums; }
+td:first-child { color: var(--ink); font-weight: 500; }
+table.num td:not(:first-child), table.num th:not(:first-child) { text-align: right; }
+
+/* callouts */
+.callout { background: var(--surface); border-left: 4px solid var(--leaf); padding: 20px 24px; margin: 28px 0; }
+.callout p:last-child { margin: 0; }
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin: 8px 0 28px; }
+.trio div { padding: 18px 16px 18px 0; display: grid; gap: 6px; }
+.trio div + div { border-left: 1px solid var(--rule); padding-left: 16px; }
+.trio b { font: 300 40px/1 var(--display); letter-spacing: -.04em; }
+.trio span { font-size: 14px; line-height: 1.4; color: var(--dim); }
+@media (max-width: 600px) { .trio { grid-template-columns: 1fr; } .trio div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); } }
+.facts, .principles { padding-left: 20px; margin: 0 0 1.2em; }
+.facts li, .principles li { margin-bottom: 10px; }
+.roadmap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 28px 0 0; border-top: 2px solid var(--ink); }
+.roadmap div { padding: 16px 14px 0 0; display: grid; gap: 6px; align-content: start; }
+.roadmap div + div { padding-left: 14px; border-left: 1px solid var(--rule); }
+.roadmap .step { font: 500 12px/1 var(--mono); color: var(--ochre); }
+.roadmap b { font-size: 17px; }
+.roadmap p { font-size: 14px; line-height: 1.5; color: var(--dim); margin: 0; }
+@media (max-width: 700px) { .roadmap { grid-template-columns: 1fr 1fr; gap: 16px 0; } .roadmap div:nth-child(3) { border-left: 0; padding-left: 0; } }
+.methods p { font-size: 15px; color: var(--dim); }
+.methods b { color: var(--body); }
+.end { margin-top: clamp(56px, 8vw, 96px); background: var(--forest); color: var(--cover-ink); padding: 36px 0; }
+.end .wrap { display: flex; align-items: center; gap: 14px; }
+.end p { margin: 0; font: 400 13px/1 var(--mono); }
+.end .wrap { flex-wrap: wrap; }
+.endlinks { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px 20px; font: 400 13px/1 var(--mono); }
+.endlinks a { color: var(--cover-ink); text-decoration: none; }
+.endlinks a:hover { text-decoration: underline; }
+.cover a.mark { color: inherit; }
+@media print { .cover, .end { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .exhibit { break-inside: avoid; } }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="brandrow"><a class="mark" href="./" aria-label="Combine home"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M49.7 14.3a25 25 0 1 0 0 35.4l-8.5-8.5a13 13 0 1 1 0-18.4l8.5-8.5Z" fill="currentColor"/><path d="m52 23 9 9-9 9-9-9 9-9Z" fill="var(--leaf)"/></svg></a><span class="kicker">White paper · November 2026</span></div>
+    <h1>Solar-assisted compute for small AI labs</h1>
+    <p class="dek">What 600 practitioners, 60 interviews and a validated energy model say about bringing AI compute to the places that need it most.</p>
+    <p class="byline">Combine, a Circle+ Company</p>
+  </div>
+</header>
+
+<main class="wrap">
+<section class="glance" aria-labelledby="glance-h">
+  <h2 id="glance-h" class="smallcap">At a glance</h2>
+  <ol><li><b>69%</b><span class="gl-k">have no direct GPU access</span><span class="gl-t">Access is the bottleneck. The median wait for a compute job is 14.7 hours.</span></li><li><b>72%</b><span class="gl-k">delayed a project in 12 months</span><span class="gl-t">Delay has a cost: 793 delays and 195 abandoned projects in all.</span></li><li><b>41%</b><span class="gl-k">run on the grid alone</span><span class="gl-t">Power is part of the problem: a median 3 hours lost a week, and 30% report heat limits.</span></li><li><b>48%</b><span class="gl-k">need local data control</span><span class="gl-t">Control matters as much as price: 43% have hit a provider limit.</span></li><li><b>131</b><span class="gl-k">can host a pilot</span><span class="gl-t">Demand is real and specific: 72% want solar with battery or grid backup.</span></li></ol>
+  <p class="glance-foot">In the validated model, a 2 kWp array with 5 kWh of storage covers about 97% of a small lab's annual load at 5.0 kWh/m²/day.</p>
+</section>
+
+<section id="summary">
+  <p class="secno">01</p><h2>Executive summary</h2>
+  <p class="lede">Small AI labs outside the big compute hubs are blocked less by talent than by access to GPUs, reliable power and control over their data. Combine closes that gap with solar-assisted compute: an accelerator workstation, a solar array and storage, sized and scheduled together.</p>
+  <p>This paper draws on three bodies of evidence gathered over eight months, from 1 February to 1 October 2026: a survey of 600 AI practitioners in 42 countries, 60 structured interviews, and an open energy model validated against pvlib and the NREL System Advisor Model.</p>
+  <p>The engineering case holds up. In the validated model, a 2 kWp array with 5 kWh of storage covers about 97% of a small lab's annual load at 5.0 kWh/m²/day, and sun-aware scheduling cuts grid import further. Combine's next step is to measure real workstation power on the workloads respondents run most: LoRA and QLoRA fine-tuning, and local inference.</p>
+</section>
+
+<section id="gap">
+  <p class="secno">02</p><h2>The compute gap</h2>
+  <p class="lede">Two in three respondents have no GPU of their own, and the cost shows up as delayed and abandoned research rather than as a line on an invoice.</p>
+  <p>The sample is the people Combine is built for. Independent AI builders are the largest group (22%), followed by research scientists (17%), graduate researchers (17%) and university faculty (14%). Their work is adaptation, not frontier training: LoRA and QLoRA fine-tuning (39% together), local inference (19%) and retrieval with embeddings (13%). Most work with open-weight models from the Llama, Mistral, Gemma and Qwen families.</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 1</span><span class="extitle">Two in three respondents have no GPU of their own; most rent, borrow or go without.</span><span class=exnote>Current compute route, % of respondents (n = 600)</span></figcaption><div class="legend"><span><i class="on"></i>No compute at all</span><span><i class="off"></i>Other routes</span></div><svg class="chart" viewBox="0 0 720 214" role="img" aria-label="Commercial cloud GPU and others"><text x="238" y="23" text-anchor="end" class="lab">Commercial cloud GPU</text><rect x="250" y="10" width="400.0" height="18" rx="2" class="bar"><title>Commercial cloud GPU: 146 of 600 (24.3%)</title></rect><text x="658.0" y="24" class="val">24%</text><text x="238" y="57" text-anchor="end" class="lab">Personal workstation</text><rect x="250" y="44" width="334.2" height="18" rx="2" class="bar"><title>Personal workstation: 122 of 600 (20.3%)</title></rect><text x="592.2" y="58" class="val">20%</text><text x="238" y="91" text-anchor="end" class="lab">Hosted model API</text><rect x="250" y="78" width="293.2" height="18" rx="2" class="bar"><title>Hosted model API: 107 of 600 (17.8%)</title></rect><text x="551.2" y="92" class="val">18%</text><text x="238" y="125" text-anchor="end" class="lab">No current compute</text><rect x="250" y="112" width="211.0" height="18" rx="2" class="bar on"><title>No current compute: 77 of 600 (12.8%)</title></rect><text x="469.0" y="126" class="val">13%</text><text x="238" y="159" text-anchor="end" class="lab">Community or shared GPU</text><rect x="250" y="146" width="205.5" height="18" rx="2" class="bar"><title>Community or shared GPU: 75 of 600 (12.5%)</title></rect><text x="463.5" y="160" class="val">12%</text><text x="238" y="193" text-anchor="end" class="lab">University or national HPC</text><rect x="250" y="180" width="200.0" height="18" rx="2" class="bar"><title>University or national HPC: 73 of 600 (12.2%)</title></rect><text x="458.0" y="194" class="val">12%</text></svg><p class="source">Source: Combine survey of 600 AI practitioners in 42 countries, 1 February to 1 October 2026</p></figure>
+  <p>Only 9% (52) have a dedicated local GPU; 23% share a limited one. The median respondent uses about 20 compute hours a month and waits 14.7 hours for a job to start.</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 2</span><span class="extitle">The gap is widest in Africa, where Combine starts.</span><span class=exnote>Access and delay by region, % of respondents unless stated</span></figcaption><div class="tablewrap"><table class="num"><thead><tr><th>Region</th><th>Respondents</th><th>No direct GPU</th><th>Delayed a project</th><th>Median wait (h)</th><th>Billing or geographic barrier</th></tr></thead><tbody><tr><td>Africa</td><td>240</td><td>78%</td><td>73%</td><td>15.8</td><td>16%</td></tr><tr><td>Oceania</td><td>30</td><td>80%</td><td>67%</td><td>15.6</td><td>23%</td></tr><tr><td>South America</td><td>90</td><td>70%</td><td>72%</td><td>14.1</td><td>24%</td></tr><tr><td>North America</td><td>45</td><td>64%</td><td>84%</td><td>14.3</td><td>9%</td></tr><tr><td>Europe</td><td>45</td><td>58%</td><td>67%</td><td>13.3</td><td>24%</td></tr><tr><td>Asia</td><td>150</td><td>54%</td><td>68%</td><td>13.5</td><td>22%</td></tr></tbody></table></div><p class=notes>Note: Oceania has 30 respondents, so its shares move more with each answer.</p><p class="source">Source: Combine survey of 600 AI practitioners in 42 countries, 1 February to 1 October 2026</p></figure>
+  <p>Africa has both the largest share of respondents and the highest rate of no GPU access among large groups. North America's high delay rate is a reminder that queues and quotas, not only geography, hold work back.</p>
+</section>
+
+<section id="power">
+  <p class="secno">03</p><h2>Power and cost</h2>
+  <p class="lede">Most respondents have grid power most of the day, but not all of it, and they pay a high price for each kilowatt-hour they report.</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 3</span><span class="extitle">Most labs run on the grid alone; one in six already uses solar with batteries.</span><span class=exnote>Current power arrangement, % of respondents (n = 600)</span></figcaption><div class="legend"><span><i class="on"></i>Already uses solar</span><span><i class="off"></i>No solar</span></div><svg class="chart" viewBox="0 0 720 214" role="img" aria-label="Grid only and others"><text x="238" y="23" text-anchor="end" class="lab">Grid only</text><rect x="250" y="10" width="400.0" height="18" rx="2" class="bar"><title>Grid only: 247 of 600 (41.2%)</title></rect><text x="658.0" y="24" class="val">41%</text><text x="238" y="57" text-anchor="end" class="lab">Grid with UPS</text><rect x="250" y="44" width="233.2" height="18" rx="2" class="bar"><title>Grid with UPS: 144 of 600 (24.0%)</title></rect><text x="491.2" y="58" class="val">24%</text><text x="238" y="91" text-anchor="end" class="lab">Solar, battery and grid</text><rect x="250" y="78" width="142.5" height="18" rx="2" class="bar on"><title>Solar, battery and grid: 88 of 600 (14.7%)</title></rect><text x="400.5" y="92" class="val">15%</text><text x="238" y="125" text-anchor="end" class="lab">Shared institutional backup</text><rect x="250" y="112" width="116.6" height="18" rx="2" class="bar"><title>Shared institutional backup: 72 of 600 (12.0%)</title></rect><text x="374.6" y="126" class="val">12%</text><text x="238" y="159" text-anchor="end" class="lab">Grid with generator</text><rect x="250" y="146" width="51.8" height="18" rx="2" class="bar"><title>Grid with generator: 32 of 600 (5.3%)</title></rect><text x="309.8" y="160" class="val">5%</text><text x="238" y="193" text-anchor="end" class="lab">Solar and battery, off-grid</text><rect x="250" y="180" width="27.5" height="18" rx="2" class="bar on"><title>Solar and battery, off-grid: 17 of 600 (2.8%)</title></rect><text x="285.5" y="194" class="val">3%</text></svg><p class="source">Source: Combine survey of 600 AI practitioners in 42 countries, 1 February to 1 October 2026</p></figure>
+  <p>The median respondent has grid power 22 hours a day (middle half: 20.3 to 23.1) and loses 3 hours a week to outages (middle half: 1.5 to 5). Oceania (4.6 hours a week) and Africa (3.3) report the most. 30% report ambient heat that constrains their hardware, and 64% describe their internet as variable (45%) or unreliable (19%). Both point to a machine that keeps working offline and is designed for heat.</p>
+  <aside class="callout"><p class="smallcap">What power costs a small lab</p><p>At the median self-reported tariff of $0.76 per kWh, a small lab's modelled load of 2,442 kWh a year costs about <b>$1,860</b> in grid electricity, and one 4-hour fine-tuning session at 800 W costs about <b>$2.40</b>. A node that covers about 97% of that load from the sun removes most of that bill. Tariffs are respondents' estimates and will be checked against utility schedules before pricing.</p></aside>
+</section>
+
+<section id="barriers">
+  <p class="secno">04</p><h2>Privacy, policy and access</h2>
+  <p class="lede">Price is the most named single barrier, yet the barriers Combine removes by putting compute on site are together named first by more than half of respondents.</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 4</span><span class="extitle">Barriers removed by on-site compute outweigh price: 56% of respondents name one first.</span><span class=exnote>Most significant compute barrier, % of respondents (n = 600)</span></figcaption><div class="legend"><span><i class="on"></i>Removed by on-site compute</span><span><i class="off"></i>Other barriers</span></div><svg class="chart" viewBox="0 0 720 316" role="img" aria-label="Compute price and others"><text x="238" y="23" text-anchor="end" class="lab">Compute price</text><rect x="250" y="10" width="400.0" height="18" rx="2" class="bar"><title>Compute price: 143 of 600 (23.8%)</title></rect><text x="658.0" y="24" class="val">24%</text><text x="238" y="57" text-anchor="end" class="lab">GPU availability or queue</text><rect x="250" y="44" width="279.7" height="18" rx="2" class="bar on"><title>GPU availability or queue: 100 of 600 (16.7%)</title></rect><text x="537.7" y="58" class="val">17%</text><text x="238" y="91" text-anchor="end" class="lab">Data privacy or sovereignty</text><rect x="250" y="78" width="221.0" height="18" rx="2" class="bar on"><title>Data privacy or sovereignty: 79 of 600 (13.2%)</title></rect><text x="479.0" y="92" class="val">13%</text><text x="238" y="125" text-anchor="end" class="lab">Electricity reliability</text><rect x="250" y="112" width="190.2" height="18" rx="2" class="bar on"><title>Electricity reliability: 68 of 600 (11.3%)</title></rect><text x="448.2" y="126" class="val">11%</text><text x="238" y="159" text-anchor="end" class="lab">Insufficient technical support</text><rect x="250" y="146" width="128.7" height="18" rx="2" class="bar"><title>Insufficient technical support: 46 of 600 (7.7%)</title></rect><text x="386.7" y="160" class="val">8%</text><text x="238" y="193" text-anchor="end" class="lab">Payment or billing access</text><rect x="250" y="180" width="125.9" height="18" rx="2" class="bar on"><title>Payment or billing access: 45 of 600 (7.5%)</title></rect><text x="383.9" y="194" class="val">8%</text><text x="238" y="227" text-anchor="end" class="lab">Usage limits or provider policy</text><rect x="250" y="214" width="120.3" height="18" rx="2" class="bar on"><title>Usage limits or provider policy: 43 of 600 (7.2%)</title></rect><text x="378.3" y="228" class="val">7%</text><text x="238" y="261" text-anchor="end" class="lab">No major barrier</text><rect x="250" y="248" width="109.1" height="18" rx="2" class="bar"><title>No major barrier: 39 of 600 (6.5%)</title></rect><text x="367.1" y="262" class="val">6%</text><text x="238" y="295" text-anchor="end" class="lab">Internet reliability</text><rect x="250" y="282" width="103.5" height="18" rx="2" class="bar"><title>Internet reliability: 37 of 600 (6.2%)</title></rect><text x="361.5" y="296" class="val">6%</text></svg><p class="source">Source: Combine survey of 600 AI practitioners in 42 countries, 1 February to 1 October 2026</p></figure>
+  <div class="trio">
+    <div><b>48%</b><span>need their data to stay under local control</span></div>
+    <div><b>43%</b><span>have hit a provider's usage or policy limit</span></div>
+    <div><b>19%</b><span>have been blocked by where they are or how they pay</span></div>
+  </div>
+  <p>A cloud discount fixes none of these. A machine on the lab's own site, running open-weight models, fixes all three.</p>
+</section>
+
+<section id="demand">
+  <p class="secno">05</p><h2>Demand for solar-assisted compute</h2>
+  <p class="lede">Respondents want solar compute with a safety net: 72% choose a solar setup backed by a battery or the grid, and 71% say grid backup is a requirement.</p>
+  <p>Preferred energy setup: solar, battery and grid backup (43%), solar-first with grid backup (29%), grid-first with a solar offset (20%), not sure (9%). Interest in a solar-assisted workstation has a median of 52 out of 100; 57% score it 50 or more and 13% score it 70 or more. Interest is broad but considered, which is what a buyer of lab equipment should sound like.</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 5</span><span class="extitle">Only one in five needs a job to start within the hour, leaving room for sun-aware scheduling.</span><span class=exnote>Acceptable wait for a solar-scheduled job, % of respondents (n = 600)</span></figcaption><svg class="chart" viewBox="0 0 720 92" role="img" aria-label="Acceptable wait for a solar-scheduled job"><rect x="0.0" y="8" width="139.6" height="34" class="seg s1"><title>Under 1 hour: 118 (20%)</title></rect><text x="6.0" y="30" class="segv">20%</text><text x="6.0" y="62" class="lab sm">Under 1 hour</text><rect x="141.6" y="8" width="130.0" height="34" class="seg s2"><title>1 to 4 hours: 110 (18%)</title></rect><text x="147.6" y="30" class="segv">18%</text><text x="147.6" y="62" class="lab sm">1 to 4 hours</text><rect x="273.6" y="8" width="151.6" height="34" class="seg s3"><title>Same day: 128 (21%)</title></rect><text x="279.6" y="30" class="segv">21%</text><text x="279.6" y="62" class="lab sm">Same day</text><rect x="427.2" y="8" width="138.4" height="34" class="seg s4"><title>1 to 2 days: 117 (20%)</title></rect><text x="433.2" y="30" class="segv dk">20%</text><text x="433.2" y="62" class="lab sm">1 to 2 days</text><rect x="567.6" y="8" width="150.4" height="34" class="seg s5"><title>Depends on workload: 127 (21%)</title></rect><text x="573.6" y="30" class="segv dk">21%</text><text x="573.6" y="62" class="lab sm">Depends on workload</text></svg><p class="source">Source: Combine survey of 600 AI practitioners in 42 countries, 1 February to 1 October 2026</p></figure>
+  <p>No single way to buy or deploy dominates. Pay per job (25%), buying an appliance (20%), an institutional contract (19%), leasing (19%) and a shared subscription (18%) all draw similar support, and deployment preferences split almost evenly between a personal workstation, a shared lab node, a regional hub and a mix. Combine should therefore be one machine with several ways to pay for it. The features people want most are the ones the architecture already implies: private inference (19%), offline-first operation (17%), local fine-tuning of open models (17%) and energy-aware scheduling (17%).</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 6</span><span class="extitle">Six in ten respondents can already bring a site, a workload or energy data to a pilot.</span><span class=exnote>Pilot readiness, % of respondents (n = 600)</span></figcaption><div class="legend"><span><i class="on"></i>Can contribute to a pilot now</span><span><i class="off"></i>Not yet</span></div><svg class="chart" viewBox="0 0 720 180" role="img" aria-label="Can host a pilot, subject to approval and others"><text x="278" y="23" text-anchor="end" class="lab">Can host a pilot, subject to approval</text><rect x="290" y="10" width="360.0" height="18" rx="2" class="bar on"><title>Can host a pilot, subject to approval: 131 of 600 (21.8%)</title></rect><text x="658.0" y="24" class="val">22%</text><text x="278" y="57" text-anchor="end" class="lab">Can provide workload details</text><rect x="290" y="44" width="338.0" height="18" rx="2" class="bar on"><title>Can provide workload details: 123 of 600 (20.5%)</title></rect><text x="636.0" y="58" class="val">20%</text><text x="278" y="91" text-anchor="end" class="lab">Can provide site energy data</text><rect x="290" y="78" width="305.0" height="18" rx="2" class="bar on"><title>Can provide site energy data: 111 of 600 (18.5%)</title></rect><text x="603.0" y="92" class="val">18%</text><text x="278" y="125" text-anchor="end" class="lab">Interested but not ready</text><rect x="290" y="112" width="332.5" height="18" rx="2" class="bar"><title>Interested but not ready: 121 of 600 (20.2%)</title></rect><text x="630.5" y="126" class="val">20%</text><text x="278" y="159" text-anchor="end" class="lab">Not interested</text><rect x="290" y="146" width="313.3" height="18" rx="2" class="bar"><title>Not interested: 114 of 600 (19.0%)</title></rect><text x="611.3" y="160" class="val">19%</text></svg><p class="source">Source: Combine survey of 600 AI practitioners in 42 countries, 1 February to 1 October 2026</p></figure>
+</section>
+
+<section id="interviews">
+  <p class="secno">06</p><h2>What the interviews add</h2>
+  <p class="lede">The 60 interviews turned the survey's numbers into six product requirements, led by offline operation and local data control.</p>
+  <p>Interviewees came from 30 countries, 22 of them in Africa and 19 in Asia. Most were independent builders (16), graduate researchers (12) and startup founders (9). Their work centred on LoRA fine-tuning (21) and QLoRA fine-tuning (12). Each interview focused on one area: compute access and cost (19), silicon and technical scope (11), privacy and control (11), power and solar fit (10), and product and adoption (9).</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 7</span><span class="extitle">Interviews turned the survey into six product requirements, led by offline operation and local data control.</span><span class=exnote>Interviews coded to each product requirement, number of interviews (n = 60)</span></figcaption><div class="legend"><span><i class="on"></i>Most frequent requirement</span><span><i class="off"></i>Other requirements</span></div><svg class="chart" viewBox="0 0 720 214" role="img" aria-label="Offline operation, local data, checkpoint recovery and others"><text x="328" y="23" text-anchor="end" class="lab">Offline operation, local data, checkpoint recovery</text><rect x="340" y="10" width="310.0" height="18" rx="2" class="bar on"><title>Offline operation, local data, checkpoint recovery: 18</title></rect><text x="658.0" y="24" class="val">18</text><text x="328" y="57" text-anchor="end" class="lab">Shared institutional deployment and metering</text><rect x="340" y="44" width="223.9" height="18" rx="2" class="bar"><title>Shared institutional deployment and metering: 13</title></rect><text x="571.9" y="58" class="val">13</text><text x="328" y="91" text-anchor="end" class="lab">Size each node to its workload</text><rect x="340" y="78" width="155.0" height="18" rx="2" class="bar"><title>Size each node to its workload: 9</title></rect><text x="503.0" y="92" class="val">9</text><text x="328" y="125" text-anchor="end" class="lab">Grid backup; report solar fraction and deferrals</text><rect x="340" y="112" width="137.8" height="18" rx="2" class="bar"><title>Grid backup; report solar fraction and deferrals: 8</title></rect><text x="485.8" y="126" class="val">8</text><text x="328" y="159" text-anchor="end" class="lab">Appliance pilot with a documented baseline</text><rect x="340" y="146" width="103.3" height="18" rx="2" class="bar"><title>Appliance pilot with a documented baseline: 6</title></rect><text x="451.3" y="160" class="val">6</text><text x="328" y="193" text-anchor="end" class="lab">Measure power and heat before silicon</text><rect x="340" y="180" width="103.3" height="18" rx="2" class="bar"><title>Measure power and heat before silicon: 6</title></rect><text x="451.3" y="194" class="val">6</text></svg><p class=notes>Note: Each interview is coded to the one implication it pointed to most strongly.</p><p class="source">Source: Combine structured interviews, 60 participants in 30 countries, 1 February to 1 October 2026</p></figure>
+  <p>Three of these confirm what the survey shows: offline-first operation, grid backup and shared deployment. Two shape the engineering roadmap directly: size to the workload, and measure power before committing to silicon. The interviews also set what each pilot must bring: GPU model, memory and training configuration; an hourly power trace and outage log; cloud invoices or credit usage where shared; the procurement decision-maker; and the site's solar resource.</p>
+</section>
+
+<section id="engineering">
+  <p class="secno">07</p><h2>Engineering evidence</h2>
+  <p class="lede">A small node is enough: in the validated model, 2 kWp of solar with 5 kWh of storage covers about 97% of a small lab's annual load at 5.0 kWh/m²/day.</p>
+  <p>Combine's energy model simulates one node hour by hour for a year: a solar array, storage, an inverter and one accelerator workstation running a 4-hour fine-tuning session and 8 hours of inference a day (2,442 kWh a year). It covers 54 scenarios across three sunlight levels, three array sizes, three storage sizes and two scheduling strategies. On 2 November 2026 (Gate G1) it was checked against two industry-standard solar models on real hourly weather.</p>
+  <figure class="exhibit"><figcaption><span class="exno">Exhibit 8</span><span class="extitle">Two independent solar models agree within 2.5%; panel heat costs 5 to 8% at hot sites.</span><span class=exnote>Annual yield per kWp, heat loss and mean daytime cell temperature, three reference sites</span></figcaption><div class="tablewrap"><table class="num"><thead><tr><th>Reference site</th><th>pvlib (kWh/kWp a year)</th><th>NREL SAM</th><th>Agreement</th><th>Heat loss</th><th>Daytime cell temperature</th></tr></thead><tbody><tr><td>Douala</td><td>1,362</td><td>1,329</td><td>+2.5%</td><td>7.7%</td><td>40 °C</td></tr><tr><td>Accra</td><td>1,635</td><td>1,633</td><td>+0.2%</td><td>6.8%</td><td>39 °C</td></tr><tr><td>Addis Ababa</td><td>1,613</td><td>1,583</td><td>+1.9%</td><td>5.3%</td><td>34 °C</td></tr></tbody></table></div><p class=notes>Note: 1 kWp fixed open rack, 10° tilt, 14% system losses, 96% inverter efficiency.</p><p class="source">Source: Combine Gate G1 cross-check, 2 November 2026; PVGIS SARAH2 typical meteorological years</p></figure>
+  <ul class="facts">
+    <li><b>Sizing.</b> 2 kWp with 5 kWh covers about 97% of the load with real seasons. The remaining gap falls in the rainy months; a larger array mostly adds surplus.</li>
+    <li><b>Storage.</b> Going from 5 to 15 kWh cuts grid import from 75 to 29 kWh a year at the Accra reference.</li>
+    <li><b>Scheduling.</b> In the tightest case, moving flexible sessions into sunnier hours cuts grid import from 286 to 107 kWh a year, in exchange for 45 sessions a year moved to a later day.</li>
+    <li><b>Weather data.</b> Two satellite datasets differ by 7 to 20% on annual sunlight at the same site, so every sizing is tested against both.</li>
+  </ul>
+  <p>The same method scales. A 1 MW data center hall at a PUE of 1.3 needs 31.2 MWh a day; a 5 MWp field covers about 60% of it at 5 sun hours, with firm power and storage carrying nights. The model, data and code are public in the <a href="https://github.com/asiyetajwa/combine/tree/main/model">Combine repository</a>.</p>
+</section>
+
+<section id="roadmap">
+  <p class="secno">08</p><h2>Design principles and roadmap</h2>
+  <p class="lede">The evidence asks Combine to build one machine, offline-first and backed by the grid, and to prove it with measured power before any custom silicon.</p>
+  <ol class="principles">
+    <li><b>Offline-first, local data.</b> Private inference and fine-tuning work with no internet, with checkpoint recovery through power interruptions.</li>
+    <li><b>Solar-first, never solar-only.</b> Battery and grid backup are standard, and every report shows solar fraction beside any deferred jobs.</li>
+    <li><b>Sized to the workload.</b> Each node is sized from the lab's real workload and sunlight, tested against both NASA POWER and PVGIS.</li>
+    <li><b>Built for heat.</b> Enclosure and cooling are designed for sites where cells average 34 to 40 °C in daylight.</li>
+    <li><b>One machine, several ways to pay.</b> Purchase, lease, institutional contract, pay per job or a shared subscription, with transparent usage metering for shared lab nodes.</li>
+    <li><b>Measure before silicon.</b> Whole-workstation power, memory and heat are measured on real workloads before the energy management chip moves beyond simulation.</li>
+  </ol>
+  <div class="roadmap">
+    <div><span class="step">01</span><b>Measure</b><p>November to December 2026: power and memory traces for LoRA, QLoRA and inference on the open-weight models respondents use most.</p></div>
+    <div><span class="step">02</span><b>Model v2</b><p>Hourly solar from pvlib, monthly seasons and both weather datasets, replaying the scheduler on the measured traces.</p></div>
+    <div><span class="step">03</span><b>Pilots</b><p>Start with the 131 respondents who can host a pilot, with a documented baseline and an agreed workload at each site.</p></div>
+    <div><span class="step">04</span><b>Silicon gate</b><p>A written feasibility note on the energy management block, decided on measured data.</p></div>
+  </div>
+</section>
+
+<section id="methods" class="methods">
+  <p class="secno">09</p><h2>Methods and limitations</h2>
+  <p><b>Data collection.</b> Questionnaires and structured interviews ran from 1 February to 1 October 2026. Participants were recruited through online invitations sent by email, against regional quotas for the survey (Africa 40%, Asia 25%, South America 15%, North America and Europe 7.5% each, Oceania 5%), and consent was obtained from survey respondents and all 60 interviewees. Interview notes and transcripts are Combine proprietary data and are not published; this paper reports only the coded themes and product implications drawn from them.</p>
+  <p><b>How figures were computed.</b> Shares are of all 600 survey respondents unless a group is named. "Median" is the middle value; "middle half" is the range between the 25th and 75th percentiles. Interview counts are records coded to each focus area and product implication. Energy model figures come from the published Gate G1 cross-check.</p>
+  <p><b>Limitations.</b> The sample is a quota sample, not a random sample of AI practitioners, so shares describe these respondents, not a population, and all-respondent totals reflect the chosen regional mix. Grid hours, outage hours, wait times and tariffs are respondents' own estimates. Interest and pilot readiness are stated intentions, not commitments. Workstation power in the energy model is an assumption until the measurement stage reports.</p>
+</section>
+</main>
+
+<footer class="end">
+  <div class="wrap"><span class="mark"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M49.7 14.3a25 25 0 1 0 0 35.4l-8.5-8.5a13 13 0 1 1 0-18.4l8.5-8.5Z" fill="currentColor"/><path d="m52 23 9 9-9 9-9-9 9-9Z" fill="var(--leaf)"/></svg></span><p>© 2026 Combine, a Circle+ Company</p><nav class="endlinks" aria-label="Combine"><a href="./">Home</a><a href="founder.html">Founder</a><a href="atlas.html">Solar Atlas</a><a href="evidence.html">Evidence Log</a></nav></div>
+</footer>
+
+</body>
+</html>
