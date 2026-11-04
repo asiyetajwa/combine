@@ -1,0 +1,17 @@
+{
+  "_about": "How the founder's letter is performed when recorded (scripts/letter-audio.mjs, ElevenLabs v3), in the same style as the Creamsoda letter. Same words as letter/letter.json, with delivery directions in square brackets, pauses as ellipses, and a few terms spelled the way they are said. The page never shows this file.",
+  "s1": "[warmly] Most of the world's AI is trained and served far from the people who use it... in buildings that draw on grids many of us cannot count on. [sincere] I started Combine because I believe a small team with one good workstation, and a few square metres of sun, should be able to build its own models... on its own terms.",
+  "s2": "[conversational] Combine is solar-assisted compute. An accelerator workstation, a solar array and storage are sized together and scheduled together... so flexible work, such as fine-tuning, moves into the sunniest hours, and private inference runs through the working day. [building] The same idea scales from one lab... to a logistics yard... to a data center campus.",
+  "s3": "[candid] I want to be exact here... because the rest of this site is written for the product we are building.",
+  "s4": "[thoughtful] From February to October 2026, we surveyed six hundred AI practitioners in forty-two countries, and interviewed sixty of them. Two in three have no GPU of their own. Seventy-two percent delayed a project last year. [brighter] And one hundred and thirty-one told us they can host a pilot. The full findings are in our white paper.",
+  "s5": "[plainly] Combine is in research and prototyping. No lab runs on Combine yet... and we have no pilots, customers or partnerships to announce.",
+  "s6": "[matter-of-fact] The hardware you see across the site, and the films, are renders of the design we have approved. They show where we are going.",
+  "s7": "[conversational] The figures come from our energy model. On the second of November 2026, we validated it against P V lib and the N R E L System Advisor Model, on real weather. That work corrected our first yield estimate by three to nine percent... and changed how we size storage. The model, the data and the code are public.",
+  "s8": "[candid] Workstation power figures are still assumptions. Measuring them on real fine-tuning and inference runs is our next step.",
+  "s9": "[plainly] The energy management chip is explored in simulation only. There is no R T L and no tape-out... and any silicon will follow measured workloads.",
+  "s10": "[quietly] I would rather show you our working... than ask for your trust.",
+  "s11": "[building] Over the coming weeks, we measure real power and memory traces, replay our scheduler against them, and open the first pilots with the labs that offered to host one. Each result goes on the Evidence Log the day we have it.",
+  "s12": "[warmly] If you build models and want them to run on hardware you control... bring one model. We will size it against the sun where you are, and share the numbers with you.",
+  "s13": "[softly] Intelligence... powered by sunlight.",
+  "sign": "[warmly] Brian."
+}

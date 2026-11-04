@@ -1,0 +1,61 @@
+{
+  "_about": "The founder's letter as it reads on founder.html, one segment per block, in reading order. Each id matches a data-seg attribute on the page. scripts/letter-audio.mjs records it.",
+  "segments": [
+    {
+      "id": "s1",
+      "text": "Most of the world's AI is trained and served far from the people who use it, in buildings that draw on grids many of us cannot count on. I started Combine because I believe a small team with one good workstation and a few square metres of sun should be able to build its own models, on its own terms."
+    },
+    {
+      "id": "s2",
+      "text": "Combine is solar-assisted compute. An accelerator workstation, a solar array and storage are sized together and scheduled together, so flexible work such as fine-tuning moves into the sunniest hours and private inference runs through the working day. The same idea scales from one lab to a logistics yard to a data center campus."
+    },
+    {
+      "id": "s3",
+      "text": "I want to be exact here, because the rest of this site is written for the product we are building."
+    },
+    {
+      "id": "s4",
+      "text": "From February to October 2026 we surveyed 600 AI practitioners in 42 countries and interviewed 60 of them. Two in three have no GPU of their own, 72 percent delayed a project last year, and 131 told us they can host a pilot. The full findings are in our white paper."
+    },
+    {
+      "id": "s5",
+      "text": "Combine is in research and prototyping. No lab runs on Combine yet, and we have no pilots, customers or partnerships to announce."
+    },
+    {
+      "id": "s6",
+      "text": "The hardware you see across the site, and the films, are renders of the design we have approved. They show where we are going."
+    },
+    {
+      "id": "s7",
+      "text": "The figures come from our energy model. On 2 November 2026 we validated it against pvlib and the NREL System Advisor Model on real weather. That work corrected our first yield estimate by 3 to 9 percent and changed how we size storage. The model, the data and the code are public."
+    },
+    {
+      "id": "s8",
+      "text": "Workstation power figures are still assumptions. Measuring them on real fine-tuning and inference runs is our next step."
+    },
+    {
+      "id": "s9",
+      "text": "The energy management chip is explored in simulation only. There is no RTL and no tape-out, and any silicon will follow measured workloads."
+    },
+    {
+      "id": "s10",
+      "text": "I would rather show you our working than ask for your trust."
+    },
+    {
+      "id": "s11",
+      "text": "Over the coming weeks we measure real power and memory traces, replay our scheduler against them, and open the first pilots with the labs that offered to host one. Each result goes on the Evidence Log the day we have it."
+    },
+    {
+      "id": "s12",
+      "text": "If you build models and want them to run on hardware you control, bring one model. We will size it against the sun where you are and share the numbers with you."
+    },
+    {
+      "id": "s13",
+      "text": "Intelligence powered by sunlight."
+    },
+    {
+      "id": "sign",
+      "text": "Brian."
+    }
+  ]
+}

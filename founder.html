@@ -17,6 +17,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/site.css">
+<style>
+.listen { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 12px 16px 12px 12px; border: 1px solid var(--rule); border-radius: 999px; background: #f4ecdc; margin: 4px 0 6px; }
+.listen[hidden] { display: none; }
+.listen-play { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--ink); color: #f4ecdc; display: grid; place-items: center; cursor: pointer; }
+.listen-play svg { width: 20px; height: 20px; fill: currentColor; }
+.listen-play .i-pause, .listen.playing .listen-play .i-play { display: none; }
+.listen.playing .listen-play .i-pause { display: inline; }
+.listen-body { display: grid; gap: 8px; min-width: 0; }
+.listen-label { font: 500 14px/1.2 var(--display); color: var(--ink); }
+.listen-track { position: relative; height: 4px; background: var(--rule); border-radius: 2px; cursor: pointer; }
+.listen-track i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--sun); border-radius: 2px; }
+.listen-time { font: 400 12px/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.letter [data-seg] { transition: background-color .3s ease; border-radius: 4px; }
+.letter [data-seg].reading { background: rgba(194,125,34,.14); box-shadow: 0 0 0 6px rgba(194,125,34,.14); }
+@media (max-width: 480px) { .listen { border-radius: 14px; } .listen-label { font-size: 13px; } }
+</style>
 </head>
 <body>
 <nav class="top" aria-label="Main">
@@ -55,35 +71,42 @@
   <div class="wrap pad">
     <article class="letter">
       <span class="eyebrow">A Letter From the Founder</span>
+      <div class="listen" id="listen" hidden>
+        <button type="button" class="listen-play" id="listen-play" aria-label="Play the letter"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+        <div class="listen-body"><span class="listen-label">Listen To The Letter In Brian's Voice</span>
+          <div class="listen-track" id="listen-track" role="slider" tabindex="0" aria-label="Position in the recording" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="listen-fill"></i></div></div>
+        <span class="listen-time" id="listen-time"></span>
+        <audio id="listen-audio" preload="none"></audio>
+      </div>
       <h2>Why Combine</h2>
 
-      <p>Most of the world's AI is trained and served far from the people who use it, in buildings that draw on grids many of us cannot count on. I started Combine because I believe a small team with one good workstation and a few square metres of sun should be able to build its own models, on its own terms.</p>
+      <p data-seg="s1">Most of the world's AI is trained and served far from the people who use it, in buildings that draw on grids many of us cannot count on. I started Combine because I believe a small team with one good workstation and a few square metres of sun should be able to build its own models, on its own terms.</p>
 
       <p class="cap">What Combine is</p>
-      <p>Combine is solar-assisted compute. An accelerator workstation, a solar array and storage are sized together and scheduled together, so flexible work such as fine-tuning moves into the sunniest hours and private inference runs through the working day. The same idea scales from one lab to a logistics yard to a data center campus.</p>
+      <p data-seg="s2">Combine is solar-assisted compute. An accelerator workstation, a solar array and storage are sized together and scheduled together, so flexible work such as fine-tuning moves into the sunniest hours and private inference runs through the working day. The same idea scales from one lab to a logistics yard to a data center campus.</p>
 
       <p class="cap">Where we are today</p>
-      <p>I want to be exact here, because the rest of this site is written for the product we are building.</p>
+      <p data-seg="s3">I want to be exact here, because the rest of this site is written for the product we are building.</p>
       <ul class="plain">
-        <li>From February to October 2026 we surveyed 600 AI practitioners in 42 countries and interviewed 60 of them. Two in three have no GPU of their own, 72 percent delayed a project last year, and 131 told us they can host a pilot. The full findings are in our <a href="whitepaper.html">white paper</a>.</li>
-        <li>Combine is in research and prototyping. No lab runs on Combine yet, and we have no pilots, customers or partnerships to announce.</li>
-        <li>The hardware you see across the site, and the films, are renders of the design we have approved. They show where we are going.</li>
-        <li>The figures come from our energy model. On 2 November 2026 we validated it against pvlib and the NREL System Advisor Model on real weather. That work corrected our first yield estimate by 3 to 9 percent and changed how we size storage. The model, the data and the code are public.</li>
-        <li>Workstation power figures are still assumptions. Measuring them on real fine-tuning and inference runs is our next step.</li>
-        <li>The energy management chip is explored in simulation only. There is no RTL and no tape-out, and any silicon will follow measured workloads.</li>
+        <li data-seg="s4">From February to October 2026 we surveyed 600 AI practitioners in 42 countries and interviewed 60 of them. Two in three have no GPU of their own, 72 percent delayed a project last year, and 131 told us they can host a pilot. The full findings are in our <a href="whitepaper.html">white paper</a>.</li>
+        <li data-seg="s5">Combine is in research and prototyping. No lab runs on Combine yet, and we have no pilots, customers or partnerships to announce.</li>
+        <li data-seg="s6">The hardware you see across the site, and the films, are renders of the design we have approved. They show where we are going.</li>
+        <li data-seg="s7">The figures come from our energy model. On 2 November 2026 we validated it against pvlib and the NREL System Advisor Model on real weather. That work corrected our first yield estimate by 3 to 9 percent and changed how we size storage. The model, the data and the code are public.</li>
+        <li data-seg="s8">Workstation power figures are still assumptions. Measuring them on real fine-tuning and inference runs is our next step.</li>
+        <li data-seg="s9">The energy management chip is explored in simulation only. There is no RTL and no tape-out, and any silicon will follow measured workloads.</li>
       </ul>
 
-      <blockquote class="pull">I would rather show you our working than ask for your trust.</blockquote>
+      <blockquote class="pull" data-seg="s10">I would rather show you our working than ask for your trust.</blockquote>
 
       <p class="cap">What comes next</p>
-      <p>Over the coming weeks we measure real power and memory traces, replay our scheduler against them, and open the first pilots with the labs that offered to host one. Each result goes on the <a href="evidence.html">Evidence Log</a> the day we have it.</p>
+      <p data-seg="s11">Over the coming weeks we measure real power and memory traces, replay our scheduler against them, and open the first pilots with the labs that offered to host one. Each result goes on the <a href="evidence.html">Evidence Log</a> the day we have it.</p>
 
       <p class="cap">An invitation</p>
-      <p>If you build models and want them to run on hardware you control, bring one model. We will size it against the sun where you are and share the numbers with you.</p>
+      <p data-seg="s12">If you build models and want them to run on hardware you control, bring one model. We will size it against the sun where you are and share the numbers with you.</p>
 
-      <p class="beat">Intelligence powered by sunlight.</p>
+      <p class="beat" data-seg="s13">Intelligence powered by sunlight.</p>
 
-      <div class="sign">
+      <div class="sign" data-seg="sign">
         <a class="me" href="https://googlesearchbrian.pages.dev" aria-label="Brian's personal website"><span class="sig" role="img" aria-label="Brian's signature"></span><strong>Brian</strong></a>
         <span style="color:var(--dim)">Founder, Combine. A Circle+ Company.</span>
         <a class="mail" href="mailto:bw@circleplus.xyz">bw@circleplus.xyz</a>
@@ -115,5 +138,7 @@
   </div>
 </footer>
 
+<script src="assets/letter-audio.js"></script>
+<script src="assets/letter-player.js"></script>
 </body>
 </html>

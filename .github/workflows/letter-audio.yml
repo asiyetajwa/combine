@@ -1,0 +1,55 @@
+name: Letter audio
+
+# Records the founder's letter in Brian's ElevenLabs voice and commits the MP3.
+# Runs when the letter text changes, or by hand (Actions > Letter audio > Run workflow).
+on:
+  push:
+    branches: [main]
+    paths:
+      - letter/letter.json
+      - letter/letter-narration.json
+      - scripts/letter-audio.mjs
+      - .github/workflows/letter-audio.yml
+  workflow_dispatch:
+    inputs:
+      voice_id:
+        description: ElevenLabs voice id (leave empty to use the voice named Brian's Voice)
+        required: false
+      force:
+        description: Record again even if the text is unchanged
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: letter-audio
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Record the letter
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY || secrets.ELEVEN_LABS_API_KEY || secrets.ELEVENLABS_KEY || secrets.XI_API_KEY }}
+          VOICE_ID: ${{ inputs.voice_id }}
+          FORCE: ${{ inputs.force }}
+        run: node scripts/letter-audio.mjs
+      - name: Commit the recording
+        run: |
+          if git diff --quiet -- assets/letter-audio.mp3 assets/letter-audio.js letter/letter-audio.json && [ -z "$(git ls-files --others --exclude-standard assets/letter-audio.mp3)" ]; then
+            echo "No change to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add assets/letter-audio.mp3 assets/letter-audio.js letter/letter-audio.json
+          git commit -m "Letter audio: record in Brian's voice"
+          git push
