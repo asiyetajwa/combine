@@ -1,0 +1,57 @@
+/* Solar Atlas reveal: a sunlit wall, a horizon seam, desert sand below; the globe waits behind the seam.
+   Desktop pulls the horizon down; phones swipe the sun up. */
+.rv { border-top: 0; background: #071a20; }
+.rv-stage { position: relative; overflow: hidden; height: min(86vh, 860px); min-height: 560px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.rv-stage > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rv-cover { pointer-events: none; }
+.rv-globe { cursor: grab; }
+.rv-globe:active { cursor: grabbing; }
+.rv-label, .rv-hint { position: absolute; left: 0; right: 0; top: 0; pointer-events: none; display: grid; justify-items: center; }
+.rv-label span { font: 600 clamp(14px, 1.5vw, 19px)/1 var(--display); letter-spacing: .28em; text-transform: uppercase; color: rgba(70, 58, 40, .78); text-shadow: 0 1px 0 rgba(255, 255, 255, .7), 0 -1px 1px rgba(0, 0, 0, .18); }
+.rv-hint span { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 244, 226, .95); background: rgba(110, 60, 20, .42); padding: 7px 10px; border-radius: 999px; }
+.rv-grab { position: absolute; left: 0; right: 0; height: 72px; cursor: grab; z-index: 2; }
+.rv-grab:active { cursor: grabbing; }
+.rv-grab:focus-visible { outline: 2px solid var(--leaf); outline-offset: -6px; }
+.rv-close { position: absolute; top: 16px; right: 16px; z-index: 5; font: 500 12px/1 var(--display); background: rgba(12, 38, 48, .72); color: #f4ecdc; border: 1px solid rgba(244, 236, 220, .2); border-radius: 999px; padding: 10px 14px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s; }
+.rv-stage.open .rv-close { opacity: 1; pointer-events: auto; }
+
+/* desktop panel */
+.rv-panel { position: absolute; top: 0; bottom: 0; right: max(16px, calc((100vw - 1240px) / 2 + 16px)); width: min(400px, 36vw); display: grid; align-content: center; gap: 14px; color: #f4ecdc; opacity: 0; transform: translateX(24px); transition: opacity .6s ease .25s, transform .6s ease .25s; pointer-events: none; z-index: 3; }
+.rv-stage.open .rv-panel { opacity: 1; transform: none; pointer-events: auto; }
+.rv-panel .eyebrow { color: #a9bab5; }
+.rv-panel h1 { font: 300 clamp(26px, 2.6vw, 36px)/1.08 var(--display); letter-spacing: -.03em; margin: 0; color: #f4ecdc; }
+.rv-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 4px 0; }
+.rv-list button { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; text-align: left; background: rgba(244, 236, 220, .04); border: 1px solid rgba(244, 236, 220, .12); color: #dfe5df; padding: 8px 10px; border-radius: 6px; font: 400 13px/1.2 var(--display); cursor: pointer; }
+.rv-list button span:last-child { font: 500 12px var(--mono); color: #a9bab5; }
+.rv-list button[aria-pressed="true"] { border-color: var(--ochre, #e3a24c); background: rgba(227, 162, 76, .12); color: #f4ecdc; }
+.rv-detail { background: rgba(12, 38, 48, .78); backdrop-filter: blur(8px); border: 1px solid rgba(244, 236, 220, .14); border-radius: 8px; padding: 16px 18px; display: grid; gap: 10px; }
+.rv-detail .figs2 { display: grid; grid-template-columns: 1fr 1fr; }
+.rv-detail .figs2 div { display: grid; gap: 4px; }
+.rv-detail .figs2 div + div { border-left: 1px solid rgba(244, 236, 220, .14); padding-left: 14px; }
+.rv-detail b { font: 300 32px/1 var(--display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.rv-detail .k { font: 500 10px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #a9bab5; }
+.rv-detail p { margin: 0; font-size: 13px; color: #c9d3cf; }
+.rv-detail a { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: #f4ecdc; }
+.rv-months { width: 100%; height: 64px; display: block; }
+
+/* phone */
+.rv-cards { position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 0 22px; display: none; transform: translateY(105%); transition: transform .55s cubic-bezier(.2, .8, .2, 1) .15s; z-index: 4; }
+.rv-cards .track { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 22px; scrollbar-width: none; }
+.rv-cards .track::-webkit-scrollbar { display: none; }
+.rv-cards .c { flex: 0 0 80%; scroll-snap-align: center; background: rgba(12, 38, 48, .88); backdrop-filter: blur(8px); border: 1px solid rgba(244, 236, 220, .16); color: #f4ecdc; border-radius: 16px; padding: 14px 16px; display: grid; gap: 4px; }
+.rv-cards .c b { font: 300 26px/1 var(--display); letter-spacing: -.03em; }
+.rv-cards .c .k { font: 500 10px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #a9bab5; }
+.rv-cards .c .n { font-size: 15px; font-weight: 500; }
+.rv-cards .c p { margin: 4px 0 0; font-size: 12px; color: #c9d3cf; }
+.rv-phonehead { position: absolute; left: 22px; right: 22px; top: 18px; z-index: 3; color: #f4ecdc; display: none; opacity: 0; transition: opacity .5s ease .3s; }
+.rv-phonehead h1 { font: 300 24px/1.1 var(--display); letter-spacing: -.03em; margin: 8px 0 0; color: #f4ecdc; max-width: 14ch; }
+@media (max-width: 760px) {
+  .rv-stage { height: calc(100svh - 64px); min-height: 600px; }
+  .rv-grab { top: 0 !important; bottom: 0; height: auto; }
+  .rv-panel { display: none; }
+  .rv-cards, .rv-phonehead { display: block; }
+  .rv-stage.open .rv-cards { transform: none; }
+  .rv-stage.open .rv-phonehead { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .rv-panel, .rv-cards, .rv-close, .rv-phonehead { transition: none; } }
+
