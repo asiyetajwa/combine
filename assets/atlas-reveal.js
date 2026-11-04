@@ -126,6 +126,18 @@
   var spot = svg.append('ellipse').attr('fill', 'url(#rv-spot)');
   var sand = svg.append('path').attr('fill', 'url(#rv-sandfill)').attr('filter', 'url(#rv-sand)');
   var sandShade = svg.append('path').attr('fill', 'url(#rv-shade)');
+  // mirage: a shimmering strip of pale sky along the far edge of the sand
+  var mirF = defs.append('filter').attr('id', 'rv-mirage').attr('x', 0).attr('y', -0.5).attr('width', 1).attr('height', 2);
+  var mirT = mirF.append('feTurbulence').attr('type', 'turbulence').attr('baseFrequency', '0.006 0.22').attr('numOctaves', 1).attr('seed', 3).attr('result', 'heat');
+  if (!reduce) mirT.append('animate').attr('attributeName', 'baseFrequency').attr('values', '0.006 0.22;0.008 0.27;0.006 0.22').attr('dur', '7s').attr('repeatCount', 'indefinite');
+  mirF.append('feDisplacementMap').attr('in', 'SourceGraphic').attr('in2', 'heat').attr('scale', 7).attr('xChannelSelector', 'R').attr('yChannelSelector', 'G');
+  var mirG = defs.append('linearGradient').attr('id', 'rv-mirageG').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', 1);
+  mirG.append('stop').attr('offset', 0).attr('stop-color', '#eef3f2').attr('stop-opacity', .92);
+  mirG.append('stop').attr('offset', .35).attr('stop-color', '#dfe9ea').attr('stop-opacity', .6);
+  mirG.append('stop').attr('offset', .7).attr('stop-color', '#f3e3c4').attr('stop-opacity', .25);
+  mirG.append('stop').attr('offset', 1).attr('stop-color', '#f3e3c4').attr('stop-opacity', 0);
+  var mirage = svg.append('path').attr('fill', 'url(#rv-mirageG)').attr('filter', 'url(#rv-mirage)');
+  var mirageGlint = svg.append('path').attr('fill', 'none').attr('stroke', 'rgba(255,255,255,.55)').attr('stroke-width', 1).attr('filter', 'url(#rv-mirage)');
   var rim = svg.append('path').attr('fill', 'none').attr('stroke', 'rgba(255,255,255,.85)').attr('stroke-width', 1.4);
   var glow = svg.append('ellipse').attr('fill', 'url(#rv-glow)').style('mix-blend-mode', 'screen');
   var spark = svg.append('g');
@@ -133,7 +145,7 @@
   var diamond = spark.append('path').attr('d', 'm52 23 9 9-9 9-9-9 9-9Z');
 
   var st = { pull: 0, vel: 0, x0: 0.5, dragging: false, open: false, opening: 0, openVel: 0 };
-  function cfg() { return phone() ? { seam: 0.7, dir: -1, threshold: 0.14, labelGap: 40, hintGap: 54 } : { seam: 0.6, dir: 1, threshold: 0.2, labelGap: 46, hintGap: 64 }; }
+  function cfg() { return phone() ? { seam: 0.7, dir: -1, threshold: 0.14, labelGap: 40, hintGap: 54 } : { seam: 0.6, dir: 1, threshold: 0.2, labelGap: 46, hintGap: 104 }; }
   function bump(x, amp) { var w = W * (0.09 + Math.min(0.12, amp / H * 0.5)); var d = (x - st.x0 * W) / w; return amp * Math.exp(-d * d); }
   function edge(y0, sign, lift, amp) { var pts = []; for (var i = 0; i <= 90; i++) { var x = i / 90 * W; pts.push(x.toFixed(1) + ',' + (y0 + sign * (lift + bump(x, amp))).toFixed(1)); } return pts; }
   function render() {
@@ -144,6 +156,9 @@
     wall.attr('d', 'M0,0L' + W + ',0L' + top.slice().reverse().join('L') + 'Z');
     var sandD = 'M' + bot.join('L') + 'L' + W + ',' + H + 'L0,' + H + 'Z';
     sand.attr('d', sandD);
+    var mh = H * (phone() ? 0.03 : 0.045), lower = bot.map(function (p) { var q = p.split(','); return q[0] + ',' + (Number(q[1]) + mh).toFixed(1); });
+    mirage.attr('d', 'M' + bot.join('L') + 'L' + lower.reverse().join('L') + 'Z').attr('opacity', 1 - prog);
+    mirageGlint.attr('d', 'M' + bot.map(function (p) { var q = p.split(','); return q[0] + ',' + (Number(q[1]) + mh * 0.28).toFixed(1); }).join('L')).attr('opacity', (1 - prog) * 0.8);
     sandShade.attr('d', 'M' + bot.join('L') + 'L' + W + ',' + (y0 + liftDown + H * 0.2) + 'L0,' + (y0 + liftDown + H * 0.2) + 'Z');
     rim.attr('d', 'M' + top.join('L'));
     spot.attr('cx', W * 0.5).attr('cy', y0 * 0.55 - liftUp).attr('rx', W * 0.22).attr('ry', y0 * 0.5);
@@ -193,7 +208,7 @@
   function release() { if (!st.dragging) return; st.dragging = false; st.vel = 0; if (st.pull > H * cfg().threshold) open(); }
   grab.addEventListener('pointerup', release); grab.addEventListener('pointercancel', release);
   grab.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-  $('rv-close').addEventListener('click', function () { st.open = false; stage.classList.remove('lit'); });
+  document.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { st.open = false; stage.classList.remove('lit'); }); });
 
   var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(size, 120); });
   size(); select(sites[0]); g.rot = [-sites[0].lon + 60, -8]; g.target = g.rot.slice();

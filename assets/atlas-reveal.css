@@ -12,8 +12,6 @@
 .rv-grab { position: absolute; left: 0; right: 0; height: 72px; cursor: grab; z-index: 2; }
 .rv-grab:active { cursor: grabbing; }
 .rv-grab:focus-visible { outline: 2px solid var(--leaf); outline-offset: -6px; }
-.rv-close { position: absolute; top: 16px; right: 16px; z-index: 5; font: 500 12px/1 var(--display); background: rgba(12, 38, 48, .72); color: #f4ecdc; border: 1px solid rgba(244, 236, 220, .2); border-radius: 999px; padding: 10px 14px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s; }
-.rv-stage.open .rv-close { opacity: 1; pointer-events: auto; }
 
 /* desktop panel */
 .rv-panel { position: absolute; top: 0; bottom: 0; right: max(16px, calc((100vw - 1240px) / 2 + 16px)); width: min(400px, 36vw); display: grid; align-content: center; gap: 14px; color: #f4ecdc; opacity: 0; transform: translateX(24px); transition: opacity .6s ease .25s, transform .6s ease .25s; pointer-events: none; z-index: 3; }
@@ -53,5 +51,13 @@
   .rv-stage.open .rv-cards { transform: none; }
   .rv-stage.open .rv-phonehead { opacity: 1; }
 }
-@media (prefers-reduced-motion: reduce) { .rv-panel, .rv-cards, .rv-close, .rv-phonehead { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .rv-panel, .rv-cards, .rv-x-phone, .rv-phonehead { transition: none; } }
 
+
+/* close: a small X that matches the region buttons and lines up with their right edge */
+.rv-panelhead { display: flex; justify-content: space-between; align-items: center; }
+.rv-x { width: 34px; height: 34px; display: grid; place-items: center; padding: 0; background: rgba(244, 236, 220, .04); border: 1px solid rgba(244, 236, 220, .12); border-radius: 6px; color: #dfe5df; cursor: pointer; }
+.rv-x svg { width: 14px; height: 14px; }
+.rv-x:hover, .rv-x:focus-visible { border-color: var(--ochre, #e3a24c); color: #f4ecdc; }
+.rv-x-phone { display: none; position: absolute; top: 16px; right: 22px; z-index: 5; opacity: 0; pointer-events: none; transition: opacity .3s; background: rgba(12, 38, 48, .72); }
+@media (max-width: 760px) { .rv-x-phone { display: grid; } .rv-stage.open .rv-x-phone { opacity: 1; pointer-events: auto; } }
