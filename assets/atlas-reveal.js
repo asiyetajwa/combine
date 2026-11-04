@@ -144,6 +144,8 @@
   spark.append('path').attr('d', 'M49.7 14.3a25 25 0 1 0 0 35.4l-8.5-8.5a13 13 0 1 1 0-18.4l8.5-8.5Z').attr('fill', 'rgba(60,40,20,.55)');
   var diamond = spark.append('path').attr('d', 'm52 23 9 9-9 9-9-9 9-9Z');
 
+  var desert = (window.CombineDesert && !/desert=svg/.test(location.search)) ? window.CombineDesert(stage, document.getElementById('rv-cover')) : null;
+  if (desert) { sand.attr('fill', 'transparent').attr('filter', null); mirage.style('display', 'none'); mirageGlint.style('display', 'none'); }
   var st = { pull: 0, vel: 0, x0: 0.5, dragging: false, open: false, opening: 0, openVel: 0 };
   function cfg() { return phone() ? { seam: 0.7, dir: -1, threshold: 0.14, labelGap: 40, hintGap: 54 } : { seam: 0.6, dir: 1, threshold: 0.2, labelGap: 46, hintGap: 104 }; }
   function bump(x, amp) { var w = W * (0.09 + Math.min(0.12, amp / H * 0.5)); var d = (x - st.x0 * W) / w; return amp * Math.exp(-d * d); }
@@ -170,6 +172,7 @@
     diamond.attr('fill', d3.interpolateRgb('#7da85a', '#d6ff9a')(gl)).style('filter', 'drop-shadow(0 0 ' + (2 + gl * 10) + 'px rgba(190,255,120,' + (0.4 + gl * 0.6) + '))');
     $('rv-label').style.transform = 'translateY(' + (y0 - liftUp - c.labelGap) + 'px)'; $('rv-label').style.opacity = String(1 - prog);
     $('rv-hint').style.transform = 'translateY(' + (y0 + liftDown + c.hintGap) + 'px)'; $('rv-hint').style.opacity = String(Math.max(0, 1 - st.pull / (H * 0.08)) * (1 - prog));
+    if (desert) desert.draw({ clip: sandD, horizon: y0 + liftDown, glowX: cx, glowY: y0 + liftDown, glow: gl, opacity: 1, still: reduce });
     if (!phone()) $('rv-grab').style.top = (y0 - 36 + (c.dir > 0 ? amp * 0.3 : 0)) + 'px';
     $('rv-grab').style.display = prog > 0.5 ? 'none' : '';
   }
@@ -179,6 +182,7 @@
     turb.attr('baseFrequency', phone() ? '0.012 0.09' : '0.007 0.075');
     lit.attr('surfaceScale', phone() ? 2.2 : 2.4);
     $('rv-hint-text').textContent = phone() ? 'Swipe Up To Raise The Sun' : 'Grab The Horizon And Pull';
+    if (desert) desert.resize(W, H);
     buildGlobe(); render();
   }
   function tick() {

@@ -61,3 +61,6 @@
 .rv-x:hover, .rv-x:focus-visible { border-color: var(--ochre, #e3a24c); color: #f4ecdc; }
 .rv-x-phone { display: none; position: absolute; top: 16px; right: 22px; z-index: 5; opacity: 0; pointer-events: none; transition: opacity .3s; background: rgba(12, 38, 48, .72); }
 @media (max-width: 760px) { .rv-x-phone { display: grid; } .rv-stage.open .rv-x-phone { opacity: 1; pointer-events: auto; } }
+
+/* the GPU desert sits under the cover and is clipped to the sand outline */
+.rv-desert { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
