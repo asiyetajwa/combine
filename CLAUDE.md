@@ -18,3 +18,9 @@ Combine is solar-assisted compute for small AI labs, a Circle+ company. These ru
 - The project's full status (stage, pilots, renders, what is measured and what is modelled) lives in the founder's letter on the Founder page, signed with Brian's signature.
 - Never invent customers, pilots, partners, testimonials or measured results. A figure that comes from the energy model is labelled "modelled".
 - No "Concept film" text in any video.
+
+## Product film (owner rule, 5 November 2026)
+
+- The product film is 2D animated graphics only, drawn in code in the brand palette and type (the sun arc, line drawings, flat hardware illustrations). No photographs, no AI images or renders, no generated video. Owner ban.
+- The film talks about the product only. No team or founder section.
+- Narrator: an American male voice (not Brian's cloned voice).
