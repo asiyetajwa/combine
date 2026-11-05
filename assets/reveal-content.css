@@ -1,0 +1,25 @@
+/* /deck and /video: the Solar Atlas horizon with a deck or a film behind it */
+.rv-content { position: absolute; inset: 0; background: #071a20; display: grid; grid-template-rows: auto 1fr; gap: 18px; padding: 28px max(16px, calc((100vw - 1240px) / 2 + 16px)) 28px; opacity: 0; pointer-events: none; transition: none; z-index: 3; color: #f4ecdc; }
+.rv-stage.open .rv-content { opacity: 1; pointer-events: auto; transition: opacity .5s ease .2s; }
+.rv-contenthead { display: flex; justify-content: space-between; align-items: center; min-height: 34px; }
+.rv-contenthead .eyebrow { color: #a9bab5; }
+.deckview, .vidview { display: grid; align-content: center; justify-items: center; gap: 16px; min-height: 0; }
+.deckframe { width: min(100%, calc((86vh - 170px) * 16 / 9)); aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #0c2630; border: 1px solid rgba(244, 236, 220, .12); }
+.deckframe img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.deckframe img[hidden] { display: none; }
+.deckbar { display: flex; align-items: center; gap: 10px; }
+.deckbtn { width: 38px; height: 38px; display: grid; place-items: center; padding: 0; background: rgba(244, 236, 220, .04); border: 1px solid rgba(244, 236, 220, .12); border-radius: 6px; color: #dfe5df; cursor: pointer; }
+.deckbtn svg { width: 15px; height: 15px; }
+.deckbtn:hover, .deckbtn:focus-visible { border-color: var(--ochre, #e3a24c); color: #f4ecdc; }
+.deckbtn:disabled { opacity: .35; cursor: default; }
+.deckcount { font: 500 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: #a9bab5; min-width: 70px; text-align: center; }
+.deckdl { margin-left: 14px; font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #f4ecdc; border: 1px solid rgba(244, 236, 220, .2); border-radius: 6px; padding: 12px 14px; text-decoration: none; }
+.deckdl:hover, .deckdl:focus-visible { border-color: var(--ochre, #e3a24c); }
+.vidview video { width: min(100%, calc((86vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; border-radius: 8px; background: #f6f1e6; display: block; }
+@media (max-width: 760px) {
+  .rv-content { padding: 64px 16px 24px; align-content: center; }
+  .rv-x-desk { display: none; }
+  .deckframe, .vidview video { width: 100%; }
+  .deckbar { flex-wrap: wrap; justify-content: center; }
+  .deckdl { margin-left: 0; }
+}

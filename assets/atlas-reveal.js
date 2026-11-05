@@ -3,19 +3,23 @@
 (function () {
   'use strict';
   var stage = document.getElementById('rv-stage');
-  if (!stage || !window.d3 || !window.topojson) return;
+  if (!stage || !window.d3) return;
+  // content mode (/deck, /video): the same horizon, with a deck or a film behind it instead of the globe
+  var content = stage.hasAttribute('data-content');
+  if (!content && !window.topojson) return;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var phoneMQ = window.matchMedia('(max-width: 760px)');
-  var sites = COMBINE_SITES.slice().sort(function (a, b) { return b.annual - a.annual; });
-  var world = topojson.feature(COMBINE_WORLD, COMBINE_WORLD.objects.countries);
+  var world = content ? null : topojson.feature(COMBINE_WORLD, COMBINE_WORLD.objects.countries);
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function dotColor(s) { var m = Math.min.apply(null, s.months); return m >= 5 ? '#e3a24c' : m >= 4 ? '#93b866' : '#9aa8ab'; }
   var $ = function (id) { return document.getElementById(id); };
   var W = 0, H = 0;
   var phone = function () { return phoneMQ.matches; };
+  var g = { proj: null }, sites = content ? [] : COMBINE_SITES.slice().sort(function (a, b) { return b.annual - a.annual; }), api = { build: function () {}, select: function () {}, spin: function () {} };
+  if (!content) {
 
   /* ------------------------------------------------------------- globe */
-  var g = { proj: null, path: null, rot: [-20, -8], target: [-20, -8], active: sites[0], dragging: false };
+  g = { proj: null, path: null, rot: [-20, -8], target: [-20, -8], active: sites[0], dragging: false };
   var gsvg = d3.select('#rv-globe');
   function globeSize() {
     var r = Math.min(W, H);
@@ -101,6 +105,8 @@
     var w = track.firstElementChild.getBoundingClientRect().width + 10;
     select(sites[Math.max(0, Math.min(sites.length - 1, Math.round(track.scrollLeft / w)))]);
   }, { passive: true });
+  api.build = buildGlobe; api.select = select; api.spin = spin;
+  }
 
   /* ------------------------------------------------------------- the cover */
   var svg = d3.select('#rv-cover'), defs = svg.append('defs');
@@ -185,7 +191,7 @@
     turb.attr('baseFrequency', phone() ? '0.012 0.09' : '0.007 0.075');
     lit.attr('surfaceScale', phone() ? 2.2 : 2.4);
     if (desert) desert.resize(W, H);
-    if (g.proj) buildGlobe();
+    if (g.proj) api.build();
     render();
   }
   function tick() {
@@ -199,7 +205,7 @@
     if (!wasOpen && stage.classList.contains('open')) stage.classList.add('lit');
     render(); requestAnimationFrame(tick);
   }
-  function open() { st.open = true; st.pull = 0; select(g.active || sites[0]); if (navigator.vibrate) navigator.vibrate(12); }
+  function open() { st.open = true; st.pull = 0; if (!content) api.select(g.active || sites[0]); stage.dispatchEvent(new Event('rv-open')); if (navigator.vibrate) navigator.vibrate(12); }
   var grab = $('rv-grab'), startY = 0, startPull = 0;
   grab.addEventListener('pointerdown', function (e) {
     if (st.open) return;
@@ -217,12 +223,13 @@
   function release() { if (!st.dragging) return; st.dragging = false; st.vel = 0; if (st.pull > H * cfg().threshold) open(); }
   grab.addEventListener('pointerup', release); grab.addEventListener('pointercancel', release);
   grab.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-  document.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { st.open = false; stage.classList.remove('open'); stage.classList.remove('lit'); }); });
+  document.querySelectorAll('[data-close]').forEach(function (b) { b.addEventListener('click', function () { st.open = false; stage.classList.remove('open'); stage.classList.remove('lit'); stage.dispatchEvent(new Event('rv-close')); }); });
 
   var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(size, 120); });
   stage.classList.add('live');
-  size(); g.rot = [-sites[0].lon + 60, -8]; g.target = g.rot.slice();
+  size();
+  if (!content) { g.rot = [-sites[0].lon + 60, -8]; g.target = g.rot.slice(); }
   // the cover is on screen now; build the globe and the region panel just after
-  setTimeout(function () { buildGlobe(); select(g.active || sites[0]); stage.classList.add('globe-ready'); }, 0);
-  requestAnimationFrame(tick); requestAnimationFrame(spin);
+  setTimeout(function () { if (!content) { api.build(); api.select(g.active || sites[0]); } stage.classList.add('globe-ready'); }, 0);
+  requestAnimationFrame(tick); if (!content) requestAnimationFrame(api.spin);
 })();
