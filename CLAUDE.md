@@ -1,6 +1,6 @@
 # Combine: owner rules for every session
 
-Combine is solar-assisted compute for small AI labs, a Circle+ company. These rules come from Brian (owner) and apply to the site, mockups, decks, exports, emails and films.
+Combine is solar-assisted compute for small AI labs, a Made of Intelligence Company. These rules come from Brian (owner) and apply to the site, mockups, decks, exports, emails and films.
 
 ## Brand
 
