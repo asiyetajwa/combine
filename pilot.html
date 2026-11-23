@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<script>(function(){var h=location.hostname;if(h==="asiyetajwa.github.io"||h==="combinelabs.pages.dev"){var p=location.pathname;if(h==="asiyetajwa.github.io"&&p.indexOf("/combine")===0){p=p.slice(8)||"/";}p=p.replace(/\.html$/,"");if(p==="/index"){p="/";}location.replace("https://combinelabs.tech"+p+location.search+location.hash);}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combine | Discuss a Pilot</title>
+<meta name="description" content="Run your own model on a solar-assisted Combine node at your site for four weeks.">
+<meta name="theme-color" content="#4f4f4c">
+<meta property="og:title" content="Combine | Discuss a Pilot">
+<meta property="og:description" content="Run your own model on a solar-assisted Combine node at your site for four weeks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://combinelabs.tech/pilot">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M49.7%2014.3a25%2025%200%201%200%200%2035.4l-8.5-8.5a13%2013%200%201%201%200-18.4l8.5-8.5Z%22%20fill%3D%22%23183c31%22%2F%3E%3Cpath%20d%3D%22m52%2023%209%209-9%209-9-9%209-9Z%22%20fill%3D%22%23759651%22%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;600&display=swap">
+<style>
+/* Layout: one image, one stage. The family render fills a low-key studio; a camera glides and zooms between the
+   products, a spotlight follows it, and the copy on the left changes with each stop. */
+:root {
+  color-scheme: dark;
+  --studio: #4f4f4c;
+  --studio-lit: #6b6b68;
+  --ink: #f3f2ee;
+  --soft: rgba(243, 242, 238, .66);
+  --faint: rgba(243, 242, 238, .4);
+  --line: rgba(243, 242, 238, .2);
+  --pill: #111110;
+  --leaf: #93b866;
+  --display: "Geist", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; overflow: hidden; color: var(--ink); font: 300 13px/1.7 var(--display); -webkit-font-smoothing: antialiased;
+  background: radial-gradient(70% 80% at 60% 50%, var(--studio-lit), var(--studio) 60%, #3a3a38); }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+
+/* stage and camera */
+.stage { position: fixed; inset: 0; overflow: hidden; touch-action: pan-y; }
+.cam { position: absolute; left: 0; top: 0; transform-origin: 0 0; transition: transform 1.4s cubic-bezier(.65, 0, .25, 1); will-change: transform; }
+.cam img { display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none;
+  -webkit-mask-image: radial-gradient(68% 70% at 50% 46%, #000 52%, transparent 97%); mask-image: radial-gradient(68% 70% at 50% 46%, #000 52%, transparent 97%); }
+.spot { position: absolute; inset: 0; pointer-events: none; transition: background 1.4s ease;
+  background: radial-gradient(var(--sr, 60%) var(--sr, 60%) at var(--sx, 60%) var(--sy, 52%), rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .22) 55%, rgba(0, 0, 0, .62) 100%); }
+.scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(30, 30, 28, .78) 0%, rgba(30, 30, 28, .4) 30%, rgba(30, 30, 28, 0) 52%); }
+
+/* hotspots live in image coordinates, so they stay on the products while the camera moves */
+.hot { position: absolute; width: 0; height: 0; }
+.hot button { position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border: 0; background: none; padding: 0; cursor: pointer; display: grid; place-items: center; }
+.hot button::before { content: ""; position: absolute; inset: 10px; border-radius: 50%; border: 1px solid rgba(243, 242, 238, .6); animation: ring 2.6s ease-out infinite; }
+.hot button i { width: 9px; height: 9px; background: var(--ink); transform: rotate(45deg); box-shadow: 0 0 0 4px rgba(17, 17, 16, .35); transition: background .3s, box-shadow .3s; }
+.hot button[aria-pressed="true"] i { background: var(--leaf); box-shadow: 0 0 14px rgba(147, 184, 102, .9); }
+.hot button span { position: absolute; left: 34px; top: 50%; transform: translateY(-50%); white-space: nowrap; font: 600 8.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; background: rgba(17, 17, 16, .7); padding: 6px 9px; border-radius: 999px; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.hot button:hover span, .hot button:focus-visible span { opacity: 1; }
+@keyframes ring { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
+.cam { --inv: 1; }
+.hot button { transform: scale(var(--inv)); transition: transform 1.4s cubic-bezier(.65, 0, .25, 1); }
+
+/* chrome */
+.top { position: fixed; z-index: 10; inset: 0 0 auto; display: grid; grid-template-columns: 220px 1fr auto; align-items: start;
+  padding: calc(26px + env(safe-area-inset-top, 0px)) max(40px, env(safe-area-inset-right, 0px)) 0 max(40px, env(safe-area-inset-left, 0px)); pointer-events: none; }
+.top > * { pointer-events: auto; }
+.brand { line-height: 0; }
+.brand svg { width: 26px; height: 26px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.steps button { all: unset; cursor: pointer; display: grid; grid-template-columns: 130px 20px; font: 600 8.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--soft); transition: color .4s; }
+.steps button span:last-child { font-weight: 400; color: var(--faint); text-align: right; }
+.steps button[aria-current="true"] { color: var(--ink); }
+.steps button:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+.right { display: flex; align-items: center; gap: 26px; }
+.right > a:first-child { font: 600 8.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--soft); }
+.pill { display: inline-block; background: var(--pill); color: var(--ink); font: 600 8.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; padding: 10px 18px; border-radius: 999px; border: 0; cursor: pointer; }
+.pill:hover { background: #000; }
+.count { position: fixed; z-index: 10; right: max(40px, env(safe-area-inset-right, 0px)); top: 34%; font: 400 8.5px/1 var(--display); letter-spacing: .16em; color: var(--soft); }
+.count b { font-weight: 600; color: var(--ink); }
+
+/* the copy panel */
+.panel { position: fixed; z-index: 5; left: max(40px, env(safe-area-inset-left, 0px)); top: 50%; transform: translateY(-46%); width: min(400px, 34vw); display: grid; gap: 20px; }
+.stop { display: grid; gap: 20px; animation: in .7s ease both; }
+@keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+h1, h2 { margin: 0; font-weight: 300; font-size: clamp(22px, 2.1vw, 30px); line-height: 1.12; letter-spacing: .12em; text-transform: uppercase; text-wrap: balance; }
+h1 strong, h2 strong { font-weight: 600; }
+p { margin: 0; color: var(--soft); max-width: 40ch; font-size: 12px; }
+dl { margin: 0; display: grid; }
+dl div { display: grid; grid-template-columns: 110px 1fr; gap: 18px; padding: 10px 0; border-top: 1px solid var(--line); }
+dl div:last-child { border-bottom: 1px solid var(--line); }
+dt { font: 600 8.5px/1.9 var(--display); letter-spacing: .16em; text-transform: uppercase; }
+dd { margin: 0; font-size: 11.5px; color: var(--soft); }
+.nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.next { all: unset; cursor: pointer; font: 600 8.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--soft); border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.next:hover { color: var(--ink); }
+.next:focus-visible { outline: 1px solid var(--ink); outline-offset: 4px; }
+.hint { font: 600 7.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
+
+form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 22px; }
+label { display: grid; gap: 5px; font: 600 8.5px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--faint); min-width: 0; }
+label.wide { grid-column: 1 / -1; }
+input, select, textarea { font: 300 13px/1.5 var(--display); color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 5px 0 7px; width: 100%; min-width: 0; text-transform: none; letter-spacing: .02em; }
+input:focus, select:focus, textarea:focus { outline: none; border-bottom-color: var(--ink); }
+select { appearance: none; cursor: pointer; }
+select option { background: #222; }
+textarea { min-height: 44px; resize: vertical; }
+.send { grid-column: 1 / -1; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.send span { font-size: 11px; color: var(--faint); }
+.done h3 { margin: 0 0 6px; font: 300 15px/1.3 var(--display); letter-spacing: .14em; text-transform: uppercase; }
+.dot { display: inline-block; width: 6px; height: 6px; background: var(--leaf); transform: rotate(45deg); margin-right: 12px; box-shadow: 0 0 10px rgba(147, 184, 102, .9); }
+
+@media (max-width: 760px) {
+  body { overflow: auto; }
+  .top { grid-template-columns: auto 1fr; padding-inline: max(20px, env(safe-area-inset-left, 0px)) max(20px, env(safe-area-inset-right, 0px)); }
+  .steps, .right > a:first-child, .count { display: none; }
+  .right { justify-self: end; }
+  .stage { position: fixed; height: 52svh; }
+  .scrim { background: linear-gradient(0deg, rgba(30, 30, 28, .9) 0%, rgba(30, 30, 28, 0) 40%); }
+  .panel { position: relative; left: auto; top: auto; transform: none; width: auto; margin-top: 52svh; padding: 22px max(20px, env(safe-area-inset-right, 0px)) 40px max(20px, env(safe-area-inset-left, 0px)); background: #3a3a38; min-height: 48svh; }
+  form { grid-template-columns: 1fr; }
+  dl div { grid-template-columns: 96px 1fr; }
+  .hot button span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cam, .spot, .hot button { transition: none; }
+  .hot button::before { animation: none; }
+  .stop { animation: none; }
+}
+</style>
+
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="cam" id="cam">
+    <img src="assets/pilot-family.jpg" alt="The Combine family in a grey studio: the storage and power cabinet, the workstation, and a yard node on a pole" width="1600" height="1000">
+    <div class="hot" style="left:20%;top:47%"><button type="button" data-go="2" aria-label="Look at storage and power"><i></i><span>Storage And Power</span></button></div>
+    <div class="hot" style="left:47.5%;top:86%"><button type="button" data-go="1" aria-label="Look at the workstation"><i></i><span>Workstation</span></button></div>
+    <div class="hot" style="left:79%;top:20%"><button type="button" data-go="3" aria-label="Look at the yard node"><i></i><span>Yard Node</span></button></div>
+  </div>
+  <div class="spot" id="spot"></div>
+  <div class="scrim"></div>
+</div>
+
+<header class="top">
+  <a class="brand" href="./" aria-label="Combine home"><svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><path d="M49.7 14.3a25 25 0 1 0 0 35.4l-8.5-8.5a13 13 0 1 1 0-18.4l8.5-8.5Z" fill="#f3f2ee"/><path d="m52 23 9 9-9 9-9-9 9-9Z" fill="#93b866"/></svg></a>
+  <ol class="steps" aria-label="Stops">
+    <li><button type="button" data-go="0"><span>Overview</span><span>01</span></button></li>
+    <li><button type="button" data-go="1"><span>Workstation</span><span>02</span></button></li>
+    <li><button type="button" data-go="2"><span>Storage And Power</span><span>03</span></button></li>
+    <li><button type="button" data-go="3"><span>Yard Node</span><span>04</span></button></li>
+    <li><button type="button" data-go="4"><span>Discuss A Pilot</span><span>05</span></button></li>
+  </ol>
+  <div class="right"><a href="./">Home</a><button class="pill" type="button" data-go="4">Discuss A Pilot</button></div>
+</header>
+<div class="count" aria-hidden="true"><b id="count">01</b> &nbsp;of&nbsp; 05</div>
+
+<main class="panel" id="panel" aria-live="polite">
+  <div class="stop" data-stop="0">
+    <h1>Why pilot<br><strong>Combine?</strong></h1>
+    <p>One workstation, a solar array and storage, sized together and installed at your site for four weeks. Tap a product to look closer.</p>
+    <dl>
+      <div><dt>Week 0</dt><dd>Qualify your model, site and budget</dd></div>
+      <div><dt>Week 1</dt><dd>A local installer fits the node</dd></div>
+      <div><dt>Weeks 2 to 3</dt><dd>Your workloads, metered under the sun</dd></div>
+      <div><dt>Week 4</dt><dd>Keep it, lease it, or hand it back</dd></div>
+    </dl>
+    <div class="nav"><button class="pill" type="button" data-go="4">Discuss A Pilot</button><button class="next" type="button" data-go="1">Next: Workstation</button></div>
+  </div>
+  <div class="stop" data-stop="1" hidden>
+    <h2>The<br><strong>workstation</strong></h2>
+    <p>Where your model runs. Heavy training moves into the brightest hours; inference runs all day.</p>
+    <dl>
+      <div><dt>Runs</dt><dd>Fine-tuning and private inference on open weights</dd></div>
+      <div><dt>Accelerator</dt><dd>One 600 W class GPU</dd></div>
+      <div><dt>Schedule</dt><dd>Sun-aware, with checkpoints so no run is lost</dd></div>
+      <div><dt>Your data</dt><dd>Stays on your hardware, on your site</dd></div>
+    </dl>
+    <div class="nav"><button class="next" type="button" data-go="2">Next: Storage And Power</button></div>
+  </div>
+  <div class="stop" data-stop="2" hidden>
+    <h2>Storage<br><strong>and power</strong></h2>
+    <p>The cabinet holds the battery and the inverter, and carries the lab through cloud and evening.</p>
+    <dl>
+      <div><dt>Storage</dt><dd>5 to 15 kWh of LFP batteries</dd></div>
+      <div><dt>Array</dt><dd>About 2 kWp of panels, sized to your sun</dd></div>
+      <div><dt>Backup</dt><dd>Grid support when the sun runs short</dd></div>
+      <div><dt>Installed by</dt><dd>A certified local solar installer</dd></div>
+    </dl>
+    <div class="nav"><button class="next" type="button" data-go="3">Next: Yard Node</button></div>
+  </div>
+  <div class="stop" data-stop="3" hidden>
+    <h2>Then<br><strong>a yard</strong></h2>
+    <p>The same power and scheduling runs a camera node with its own panel and battery, reading bay status in a logistics yard on a small vision model.</p>
+    <dl>
+      <div><dt>Power</dt><dd>Its own panel and battery, off the grid</dd></div>
+      <div><dt>Runs</dt><dd>A small vision model at the edge</dd></div>
+      <div><dt>Reports</dt><dd>Bay status: clear, unknown or stale</dd></div>
+    </dl>
+    <div class="nav"><button class="pill" type="button" data-go="4">Discuss A Pilot</button><button class="next" type="button" data-go="0">Back To Overview</button></div>
+  </div>
+  <div class="stop" data-stop="4" hidden>
+    <h2>Discuss a<br><strong>pilot</strong></h2>
+    <form id="pilot-form" novalidate>
+      <label for="f-name">Your name<input id="f-name" name="name" autocomplete="name" required placeholder="Your full name"></label>
+      <label for="f-lab">Lab or team<input id="f-lab" name="lab" placeholder="Lab, team or company"></label>
+      <label for="f-email">Email<input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@lab.org"></label>
+      <label for="f-city">City and country<input id="f-city" name="city" placeholder="Where the node would go"></label>
+      <label for="f-work">The work<select id="f-work" name="work"><option>Fine-tune an open-weight model</option><option>Run private inference</option><option>Train a small model</option></select></label>
+      <label for="f-power">Power today<select id="f-power" name="power"><option>Grid with outages</option><option>Grid only</option><option>Grid with a generator</option><option>Solar and battery already</option></select></label>
+      <label for="f-model" class="wide">Your model and data<textarea id="f-model" name="model" placeholder="The model, the data and anything that must stay on site"></textarea></label>
+      <div class="send"><button class="pill" type="submit">Request A Pilot</button><span>Opens your email app with your answers, addressed to bw@circleplus.xyz</span></div>
+    </form>
+    <div class="done" id="done" hidden><h3><span class="dot"></span>One step left</h3><p>Your email app should have opened with your request. Send it to reach the founder directly. If nothing opened, write to <strong style="color:var(--ink);font-weight:400;user-select:all">bw@circleplus.xyz</strong>.</p></div>
+  </div>
+</main>
+
+<script>
+(function () {
+  var cam = document.getElementById('cam'), spot = document.getElementById('spot'), count = document.getElementById('count');
+  var stops = document.querySelectorAll('.stop'), steps = document.querySelectorAll('.steps button'), hots = document.querySelectorAll('.hot button');
+  var phone = window.matchMedia('(max-width: 760px)');
+  // each stop: image point to frame (fx, fy as fractions of the image), zoom, and where it lands on screen
+  var SHOTS = [
+    { fx: .52, fy: .52, z: .86, sx: .63, sy: .5, r: '75%' },
+    { fx: .49, fy: .82, z: 1.55, sx: .64, sy: .55, r: '34%' },
+    { fx: .21, fy: .55, z: 1.08, sx: .66, sy: .52, r: '44%' },
+    { fx: .79, fy: .26, z: 1.55, sx: .64, sy: .46, r: '34%' },
+    { fx: .45, fy: .6, z: .92, sx: .72, sy: .55, r: '52%' }
+  ];
+  var cur = 0;
+  function frame() {
+    var W = innerWidth, H = phone.matches ? innerHeight * .52 : innerHeight, s = SHOTS[cur];
+    var base = Math.max(W / 1600, H / 1000) * (phone.matches ? 1.15 : 1.02);
+    var cw = 1600 * base, ch = 1000 * base;
+    cam.style.width = cw + 'px'; cam.style.height = ch + 'px';
+    var sx = phone.matches ? .5 : s.sx, sy = phone.matches ? .5 : s.sy;
+    var tx = sx * W - s.fx * cw * s.z, ty = sy * H - s.fy * ch * s.z;
+    cam.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s.z + ')';
+    cam.style.setProperty('--inv', (1 / s.z).toFixed(3));
+    spot.style.setProperty('--sx', (sx * 100) + '%'); spot.style.setProperty('--sy', (sy * 100) + '%'); spot.style.setProperty('--sr', s.r);
+  }
+  function go(i) {
+    cur = (i + SHOTS.length) % SHOTS.length;
+    stops.forEach(function (el) { el.hidden = Number(el.dataset.stop) !== cur; });
+    steps.forEach(function (b) { b.setAttribute('aria-current', String(Number(b.dataset.go) === cur)); });
+    hots.forEach(function (b) { b.setAttribute('aria-pressed', String(Number(b.dataset.go) === cur)); });
+    count.textContent = '0' + (cur + 1);
+    frame();
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) go(Number(b.dataset.go)); });
+  document.addEventListener('keydown', function (e) {
+    if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return;
+    if (e.key === 'ArrowRight') go(cur + 1); else if (e.key === 'ArrowLeft') go(cur - 1);
+  });
+  var sx0 = null, sy0 = 0, stage = document.getElementById('stage');
+  stage.addEventListener('touchstart', function (e) { sx0 = e.touches[0].clientX; sy0 = e.touches[0].clientY; }, { passive: true });
+  stage.addEventListener('touchend', function (e) { if (sx0 === null) return; var dx = e.changedTouches[0].clientX - sx0, dy = e.changedTouches[0].clientY - sy0; sx0 = null; if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(cur + (dx < 0 ? 1 : -1)); }, { passive: true });
+  addEventListener('resize', frame);
+  document.getElementById('pilot-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = this, v = function (id) { return document.getElementById(id).value.trim(); };
+    if (!v('f-name') || !f.querySelector('#f-email').checkValidity() || !v('f-email')) { (v('f-name') ? document.getElementById('f-email') : document.getElementById('f-name')).focus(); return; }
+    var body = ['Name: ' + v('f-name'), 'Lab or team: ' + v('f-lab'), 'Email: ' + v('f-email'), 'City and country: ' + v('f-city'), 'The work: ' + v('f-work'), 'Power today: ' + v('f-power'), '', 'Model and data:', v('f-model')].join('\n');
+    location.href = 'mailto:bw@circleplus.xyz?subject=' + encodeURIComponent('Pilot request: ' + (v('f-lab') || v('f-name'))) + '&body=' + encodeURIComponent(body);
+    f.hidden = true; document.getElementById('done').hidden = false;
+  });
+  go(0);
+})();
+</script>
+
+</body>
+</html>

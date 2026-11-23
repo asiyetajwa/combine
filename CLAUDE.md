@@ -24,3 +24,9 @@ Combine is solar-assisted compute for small AI labs, a Made of Intelligence Comp
 - The product film is 2D animated graphics only, drawn in code in the brand palette and type (the sun arc, line drawings, flat hardware illustrations). No photographs, no AI images or renders, no generated video. Owner ban.
 - The film talks about the product only. No team or founder section.
 - Narrator: an American male voice (not Brian's cloned voice).
+
+## Pilot page (owner rule, 23 November 2026)
+
+- `pilot.html` (combinelabs.tech/pilot) uses one image only: the approved studio render of the hardware family (`assets/pilot-family.jpg`), shown once as an interactive stage. Owner's choice; do not swap in Veo frames or repeat the image.
+- Every "Discuss a Pilot" button on the site links to `pilot.html`. The form opens the visitor's email app addressed to bw@circleplus.xyz; there is no server-side form.
+- No full-screen sweeps or scroll-snapping on this page: the owner found them irritating.
